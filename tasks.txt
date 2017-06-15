@@ -1,0 +1,20 @@
+
+Escribe fecha y nombre adelante de cada modulo para saber que modulo se encuentra en desarrollo
+
+Modulo Anuncios:
+Modulo Productos:
+Modulo Ventas:
+Modulo Clientes:
+Modulo Perfil:
+Modulo Usuarios: 22/junio/2017/Erastus
+Modulo Contacto:
+Modulo Apariencia:
+Modulo Configuración:
+
+Notas: 
+1 si haces un commit procura que sea funcional!.
+2 para basarte en la vista se esta usando la siguiente plantilla.
+  http://wrapbootstrap.com/preview/WB0277668
+3 No se estan cargando todos los plugins de la plantilla (ejemplo: dropzone),
+  si requieres de un plugin porfavor notificalo, esto evitara que el cms sea muy pesado.
+  y por otro lado tener actualizados los plugins a su version mas reciente.
