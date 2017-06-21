@@ -1,5 +1,9 @@
 # digyna-CMS
-Gestor administrador de contenido para páginas dinámicas e implementación de eCommerce
+Gestor administrador de contenido para páginas dinámicas e implementación de eCommerce.
++ ¡ALVERTENCIA!. Actualmente este proyecto esta en desarrollo, por lo cual no se puede usar para produccion. 
+
+## Cómo colaborar
+Si quieres colaborar, enviando contribuciones o comentarios, te invitamos a hacerlo utilizando el sistema de issues de GitHub.
 
 ## Licencia
 Este programa es software libre, y usted puede redistribuirlo bajo ciertas condiciones;
