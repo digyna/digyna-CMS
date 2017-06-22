@@ -21,7 +21,7 @@ Este programa es software libre, y usted puede redistribuirlo bajo ciertas condi
 
 5. Modifca application/config/config.php encryption key con uno propio
 
-6. ingresa en tu navegador
+6. ingresa en tu navegador http://localhost/digyna-cms/mypanel
 7. Inicia sesión usando  
 * username: admin 
   
