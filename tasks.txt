@@ -4,7 +4,7 @@ Escribe fecha y nombre adelante de cada modulo para saber que modulo se encuentr
 Modulo Anuncios:
 Modulo Productos:
 Modulo Ventas:
-Modulo Clientes:
+Modulo Clientes: 22/junio/2017/Erastus
 Modulo Perfil:
 Modulo Usuarios: 22/junio/2017/Erastus
 Modulo Contacto:
