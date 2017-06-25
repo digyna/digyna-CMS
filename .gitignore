@@ -2,6 +2,7 @@ tmp
 application/sessions/*
 application/logs/*
 application/uploads/*
+assets/plugins
 *.patch
 patches/
 .idea/
