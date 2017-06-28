@@ -12,13 +12,29 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	<meta name="description" content="">
 	<meta name="author" content="digyna">
-	<!-- start mincss template tags -->
-	<link rel="stylesheet" type="text/css" href="assets/mypanel/css/digyna-cms.min.css?rel=c06d893e5b"/>
-	<!-- end mincss template tags -->
 
-	<!-- start css template tags -->
-	<link rel="stylesheet" type="text/css" href="assets/mypanel/css/main.css"/>
-	<!-- end css template tags -->
+	<?php if ($this->input->get('debug') == 'true') : ?>
+		<!-- bower:css -->
+		<link rel='stylesheet' href='bower_components/bootstrap/dist/css/bootstrap.css' />
+		<link rel='stylesheet' href='bower_components/jquery-ui/themes/base/jquery-ui.css' />
+		<link rel='stylesheet' href='bower_components/bootstrap3-dialog/dist/css/bootstrap-dialog.min.css' />
+		<link rel='stylesheet' href='bower_components/jasny-bootstrap/dist/css/jasny-bootstrap.css' />
+		<link rel='stylesheet' href='bower_components/smalot-bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css' />
+		<link rel='stylesheet' href='bower_components/bootstrap-select/dist/css/bootstrap-select.css' />
+		<link rel='stylesheet' href='bower_components/bootstrap-table/src/bootstrap-table.css' />
+		<link rel='stylesheet' href='bower_components/bootstrap-daterangepicker/daterangepicker.css' />
+		<link rel='stylesheet' href='bower_components/chartist/dist/chartist.min.css' />
+		<link rel='stylesheet' href='bower_components/chartist-plugin-tooltip/dist/chartist-plugin-tooltip.css' />
+		<link rel='stylesheet' href='bower_components/Ionicons/css/ionicons.css' />
+		<!-- endbower -->
+		<!-- start css template tags -->
+		<link rel="stylesheet" type="text/css" href="assets/mypanel/css/main.css"/>
+		<!-- end css template tags -->
+	<?php else : ?>
+		<!-- start mincss template tags -->
+		<link rel="stylesheet" type="text/css" href="assets/mypanel/css/digyna-cms.min.css?rel=50b8e08cd2"/>
+		<!-- end mincss template tags -->
+	<?php endif; ?>
 
 	
 	<!-- start Google Fonts -->

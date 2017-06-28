@@ -4,8 +4,8 @@ module.exports = function(grunt) {
 		pkg: grunt.file.readJSON('package.json'),
 		wiredep: {
 			task: {
-				ignorePath: '../../../assets/',
-				src: ['application/views/mypanel/includes/header.php']
+				ignorePath: '../../../../',
+				src: ['application/views/mypanel/includes/header.php','application/views/mypanel/includes/footer_js.php']
 			}
 		},
 		bower_concat: {
@@ -45,13 +45,6 @@ module.exports = function(grunt) {
 				}
 			}
 		},
-		cssmin: {
-			target: {
-				files: {
-					'assets/mypanel/css/<%= pkg.name %>.min.css': ['tmp/digyna-cms_bower.css', 'public/css/*.css', '!public/css/login.css', '!public/css/invoice_email.css', '!public/css/barcode_font.css', '!public/css/style.css']
-				}
-			}
-		},
 		concat: {
 			js: {
 				options: {
@@ -77,6 +70,13 @@ module.exports = function(grunt) {
 			dist: {
 				files: {
 					'assets/mypanel/js/<%= pkg.name %>.min.js': ['tmp/<%= pkg.name %>.js']
+				}
+			}
+		},
+		cssmin: {
+			target: {
+				files: {
+					'assets/mypanel/css/<%= pkg.name %>.min.css': ['tmp/digyna-cms_bower.css', 'assets/mypanel/css/main.css']
 				}
 			}
 		},
@@ -111,7 +111,7 @@ module.exports = function(grunt) {
 					ignorePath: '../../../../'
 				},
 				src: ['assets/mypanel/css/main.css'],
-				dest: 'application/views/mypanel/includes/header.php',
+				dest: 'application/views/mypanel/includes/header.php'
 			},
 			css_login: {
 				options: {
@@ -131,6 +131,16 @@ module.exports = function(grunt) {
                     ignorePath: '../../../../'
 				},
 				src: ['assets/mypanel/js/*min.js'],
+				dest: 'application/views/mypanel/includes/footer_js.php'
+			},
+			js_footer: {
+				options: {
+					scriptTemplate: '<script type="text/javascript" src="{{ path }}"></script>',
+					openTag: '<!-- start js template tags -->',
+					closeTag: '<!-- end js template tags -->',
+					ignorePath: '../../../../'
+				},
+				src: ['assets/mypanel/js/manage_tables.js','assets/mypanel/js/app.js'],
 				dest: 'application/views/mypanel/includes/footer_js.php'
 			}
 		},
