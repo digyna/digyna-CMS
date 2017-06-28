@@ -275,21 +275,21 @@
     },
     {
         "name": "codeigniter/framework",
-        "version": "3.1.4",
-        "version_normalized": "3.1.4.0",
+        "version": "3.1.5",
+        "version_normalized": "3.1.5.0",
         "source": {
             "type": "git",
             "url": "https://github.com/bcit-ci/CodeIgniter.git",
-            "reference": "873608df8be83420474e3cf9fc749a8ed12a6c09"
+            "reference": "6c7a4266410070d30f8f6bcdf9c9e67f3d6478e3"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/bcit-ci/CodeIgniter/zipball/873608df8be83420474e3cf9fc749a8ed12a6c09",
-            "reference": "873608df8be83420474e3cf9fc749a8ed12a6c09",
+            "url": "https://api.github.com/repos/bcit-ci/CodeIgniter/zipball/6c7a4266410070d30f8f6bcdf9c9e67f3d6478e3",
+            "reference": "6c7a4266410070d30f8f6bcdf9c9e67f3d6478e3",
             "shasum": ""
         },
         "require": {
-            "php": ">=5.2.4"
+            "php": ">=5.3.7"
         },
         "require-dev": {
             "mikey179/vfsstream": "1.1.*",
@@ -298,7 +298,7 @@
         "suggest": {
             "paragonie/random_compat": "Provides better randomness in PHP 5.x"
         },
-        "time": "2017-03-20T15:51:08+00:00",
+        "time": "2017-06-19T08:33:58+00:00",
         "type": "project",
         "installation-source": "dist",
         "notification-url": "https://packagist.org/downloads/",
