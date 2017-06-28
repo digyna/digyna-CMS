@@ -1,8 +1,9 @@
+node_modules
 tmp
 application/sessions/*
 application/logs/*
 application/uploads/*
-assets/plugins
+public/bower_components
 *.patch
 patches/
 .idea/
