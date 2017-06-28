@@ -1,69 +1,169 @@
-(window.jQuery),
-function(a) {
-    var b = !1;
-    if("function" == typeof define && define.amd && (define(a), b = !0), "object" == typeof exports && (module.exports = a(), b = !0), !b) {
-        var c = window.Cookies,
-            d = window.Cookies = a();
-        d.noConflict = function() {
-            return window.Cookies = c, d
-        }
-    }
-}(function() {
-    function a() {
-        for(var a = 0, b = {}; a < arguments.length; a++) {
-            var c = arguments[a];
-            for(var d in c) b[d] = c[d]
-        }
-        return b
-    }
+$(document).ready(function(){
 
-    function b(c) {
-        function d(b, e, f) {
-            var g;
-            if("undefined" != typeof document) {
-                if(arguments.length > 1) {
-                    if(f = a({
-                            path: "/"
-                        }, d.defaults, f), "number" == typeof f.expires) {
-                        var h = new Date;
-                        h.setMilliseconds(h.getMilliseconds() + 864e5 * f.expires), f.expires = h
-                    }
-                    try {
-                        g = JSON.stringify(e), /^[\{\[]/.test(g) && (e = g)
-                    } catch(i) {}
-                    return e = c.write ? c.write(e, b) : encodeURIComponent(String(e)).replace(/%(23|24|26|2B|3A|3C|3E|3D|2F|3F|40|5B|5D|5E|60|7B|7D|7C)/g, decodeURIComponent), b = encodeURIComponent(String(b)), b = b.replace(/%(23|24|26|2B|5E|60|7C)/g, decodeURIComponent), b = b.replace(/[\(\)]/g, escape), document.cookie = [b, "=", e, f.expires ? "; expires=" + f.expires.toUTCString() : "", f.path ? "; path=" + f.path : "", f.domain ? "; domain=" + f.domain : "", f.secure ? "; secure" : ""].join("")
-                }
-                b || (g = {});
-                for(var j = document.cookie ? document.cookie.split("; ") : [], k = /(%[0-9A-Z]{2})+/g, l = 0; l < j.length; l++) {
-                    var m = j[l].split("="),
-                        n = m.slice(1).join("=");
-                    '"' === n.charAt(0) && (n = n.slice(1, -1));
-                    try {
-                        var o = m[0].replace(k, decodeURIComponent);
-                        if(n = c.read ? c.read(n, o) : c(n, o) || n.replace(k, decodeURIComponent), this.json) try {
-                            n = JSON.parse(n)
-                        } catch(i) {}
-                        if(b === o) {
-                            g = n;
-                            break
-                        }
-                        b || (g[o] = n)
-                    } catch(i) {}
-                }
-                return g
-            }
-        }
-        return d.set = d, d.get = function(a) {
-            return d.call(d, a)
-        }, d.getJSON = function() {
-            return d.apply({
-                json: !0
-            }, [].slice.call(arguments))
-        }, d.defaults = {}, d.remove = function(b, c) {
-            d(b, "", a(c, {
-                expires: -1
-            }))
-        }, d.withConverter = b, d
-    }
-    return b(function() {})
+	/************************
+	/*	MAIN NAVIGATION
+	/************************/
+
+	$mainMenu = $('.main-menu');
+
+	// init collapse first for browser without transition support (IE9) 
+	$mainMenu.find('li').has('ul').children('ul').collapse({toggle: false});
+
+	$mainMenu.find('li.active').has('ul').children('ul').addClass('in');
+	$mainMenu.find('li').not('.active').has('ul').children('ul').removeClass('in');
+
+	$('.main-menu .submenu-toggle').click( function(e){
+		e.preventDefault();
+
+		$currentItemToggle = $(this);
+		$currentItem = $(this).parent();
+		$mainMenu.find('li').not($currentItem).not($currentItem.parents('li')).removeClass('active').children('ul.in').collapse('hide');
+		$currentItem.toggleClass('active').children('ul').collapse('toggle');
+	});
+
+	$('.btn-off-canvas').click( function() {
+		if($('.wrapper').hasClass('off-canvas-active')) {
+			$('.wrapper').removeClass('off-canvas-active');
+		} else {
+			$('.wrapper').addClass('off-canvas-active');
+		}
+	});
+
+	$('.btn-nav-sidebar-minified').click( function(e) {
+		e.preventDefault();
+		
+		if( $('.wrapper').hasClass('main-nav-minified') ) {
+			$('.wrapper').removeClass('main-nav-minified');
+			$('#main-nav').hide();
+			$('#fixed-left-nav').removeAttr('disabled');
+
+			setTimeout(
+				function () {
+					$('#main-nav').fadeIn(500);
+				}, 100);
+		} else {
+			$('.wrapper').addClass('main-nav-minified');
+			disableFixedLeft(); // fixed left sidebar is not applicable for this mode
+			$('#fixed-left-nav').attr('checked', false).attr('disabled', true);
+		}
+	});
+
+	$(window).resize(removeMinifiedOnSmallScreen);
+
+	function removeMinifiedOnSmallScreen() {
+		if( ($(document).innerWidth()) < 1200) {
+			$('.wrapper').removeClass('main-nav-minified');
+		}
+	}
+
+	function disableFixedLeft() {
+		$('body').removeClass('fixed-left-active');
+
+		if($('#col-left .slimScrollDiv').length > 0) {
+			$(".main-nav-wrapper").parent().replaceWith($(".main-nav-wrapper"));
+		}
+	}
+
+
+	/************************
+	/*	SIDEBAR
+	/************************/
+
+	$('.toggle-right-sidebar').click( function(e) {
+		$(this).toggleClass('active');
+		$('.right-sidebar').toggleClass('active');
+	});
+
+
+	/************************
+	/*	WIDGET
+	/************************/
+
+	// widget remove
+	$('.widget .btn-remove').click( function(e) {
+
+		e.preventDefault();
+		$(this).parents('.widget').fadeOut(300, function() {
+			$(this).remove();
+		});
+	});
+
+	// widget toggle expand
+	$('.widget .btn-toggle-expand').clickToggle(
+		function(e) {
+			e.preventDefault();
+			$(this).parents('.widget').find('.slimScrollDiv').css('height', 'auto');
+			$(this).parents('.widget').find('.widget-content').slideUp(300);
+			$(this).find('i').removeClass('ion-ios-arrow-up').addClass('ion-ios-arrow-down');
+		},
+		function(e) {
+			e.preventDefault();
+			$(this).parents('.widget').find('.widget-content').slideDown(300);
+			$(this).find('i').removeClass('ion-ios-arrow-down').addClass('ion-ios-arrow-up');
+		}
+	);
+
+
+	/************************
+	/*	TODO LIST
+	/************************/
+
+	if( $('.todo-list').length > 0 ) {
+		$('.todo-list').sortable({
+			revert: true,
+			placeholder: "ui-state-highlight",
+			handle: '.handle'
+		});
+
+		$('.todo-list input').change( function() {
+			if( $(this).prop('checked') ) {
+				$(this).parents('li').addClass('completed');
+			}else {
+				$(this).parents('li').removeClass('completed');
+			}
+		});
+	}
+
+
+	//*******************************************
+	/*	WIDGET SLIM SCROLL
+	/********************************************/
+
+	if( $('body.dashboard').length > 0) {
+		$('.widget-todo .widget-content').slimScroll({
+			height: '400px',
+			wheelStep: 5,
+		});
+
+		$('.widget-live-feed .widget-content').slimScroll({
+			height: '409px',
+			wheelStep: 5,
+		});
+	}
+
+	$('.widget-chat-contacts .widget-content').slimScroll({
+		height: '800px',
+		wheelStep: 5,
+		railVisible: true,
+		railColor: '#fff'
+	});
+	
 });
+
+	// toggle function
+	$.fn.clickToggle = function( f1, f2 ) {
+		return this.each( function() {
+			var clicked = false;
+			$(this).bind('click', function() {
+				if(clicked) {
+					clicked = false;
+					return f2.apply(this, arguments);
+				}
+
+				clicked = true;
+				return f1.apply(this, arguments);
+			});
+		});
+
+	}
+

@@ -4,36 +4,27 @@
 <html lang="es" class="no-js">
 <!--<![endif]-->
 <head>
-	<title>digina-cms</title>
+	<title>digyna-cms</title>
 	<link rel="shortcut icon" type="image/x-icon" href="assets/mypanel/ico/favicon.ico">
 	<meta charset="utf-8">
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<base href="<?php echo base_url('mypanel');?>" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	<meta name="description" content="">
-	<meta name="author" content="dsofter">
-		<!-- CSS -->
-	<link href="<?php echo base_url('assets/mypanel/plugins/bootstrap-3.3.7-dist/css/bootstrap.min.css');?>" rel="stylesheet" type="text/css">
-	<link href="<?php echo base_url('assets/mypanel/plugins/ionicons-2.0.1/css/ionicons.min.css');?>" rel="stylesheet" type="text/css">
-	<link href="<?php echo base_url('assets/mypanel/plugins/font-awesome-4.7.0/css/font-awesome.min.css');?>" rel="stylesheet" type="text/css">
-	<link href="<?php echo base_url('assets/mypanel/css/main.css');?>" rel="stylesheet" type="text/css">
-	<!-- Google Fonts -->
-	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,300,400,700' rel='stylesheet' type='text/css'>
-	
-		<!--[if lte IE 8]>
-		<link rel="stylesheet" media="print" href="dist/print.css" type="text/css" />
-		<![endif]-->
-		<!-- start mincss template tags -->
-		
-		<!-- end mincss template tags -->
-		<!-- start minjs template tags -->
-		<script type="text/javascript" src="assets/mypanel/plugins/jquery/jquery-3.2.0.min.js"></script>
-		<script type="text/javascript" src="assets/mypanel/js/app.js"></script>
-		<!-- end minjs template tags 
-		<script type="text/javascript" src="assets/mypanel/plugins/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script> -->
+	<meta name="author" content="digyna">
+	<!-- start mincss template tags -->
+	<link rel="stylesheet" type="text/css" href="assets/mypanel/css/digyna-cms.min.css?rel=c06d893e5b"/>
+	<!-- end mincss template tags -->
 
-	<?php $this->load->view('mypanel/includes/header_js'); ?>
-		
+	<!-- start css template tags -->
+	<link rel="stylesheet" type="text/css" href="assets/mypanel/css/main.css"/>
+	<!-- end css template tags -->
+
+	
+	<!-- start Google Fonts -->
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,300,400,700' rel='stylesheet' type='text/css'>
+	<!-- end Google Fonts -->
+			
 </head>
 
 <body class="fixed-top-active dashboard">

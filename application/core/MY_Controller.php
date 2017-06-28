@@ -52,6 +52,7 @@ class Secure_Controller extends CI_Controller
 		$data['contact_info']= $this->contact_lib->get_contact();
 		$data['user_info'] = $logged_in_employee_info;
 		$data['controller_name'] = $module_id;
+		$data['submodule'] = $submodule_id;
 
 		$this->load->vars($data);
 	}

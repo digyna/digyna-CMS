@@ -1,8 +1,8 @@
 {
-    "name": "digyna/digyna-CMS",
+    "name": "digyna/digyna-cms",
     "description": "Gestor administrador de contenido para páginas dinámicas e implementación de eCommerce",
     "type": "project",
-    "license": "MIT",
+    "license": "GPLv3",
     "authors": [
         {
             "name": "Erastus",

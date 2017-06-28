@@ -1,6 +1,5 @@
 <script type="text/javascript">
 
-
 	var post = $.post;
 	
 	var csrf_token = function() {
@@ -39,5 +38,20 @@
 	session_sha1 = '<?php echo $this->session->userdata('session_sha1'); ?>';
 
 	
+	(function(lang, $) {
+
+    var lines = {
+        'common_submit' : "<?php echo $this->lang->line('common_submit') ?>",
+        'common_cancel' : "<?php echo $this->lang->line('common_cancel') ?>"
+    };
+
+    $.extend(lang, {
+        line: function(key) {
+            return lines[key];
+        }
+    });
+
+
+})(window.lang = window.lang || {}, jQuery);
 
 </script>

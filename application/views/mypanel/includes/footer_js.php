@@ -1,4 +1,4 @@
-	<script src="assets/mypanel/plugins/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
-	<script src="assets/mypanel/plugins/bootstrap-multiselect/bootstrap-multiselect.js"></script>
-	<script src="assets/mypanel/plugins/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-	<script src="assets/mypanel/js/dgn-common.js"></script>
+	<!-- start minjs template tags -->
+	<script type="text/javascript" src="assets/mypanel/js/digyna-cms.min.js?rel=50f1eeeb02"></script>
+	<!-- end minjs template tags -->
+	<?php $this->load->view('mypanel/includes/app_js'); ?>
