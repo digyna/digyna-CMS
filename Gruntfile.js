@@ -7,6 +7,7 @@ module.exports = function(grunt) {
 				ignorePath: '../../../../',
 				src: ['application/views/mypanel/includes/header.php','application/views/mypanel/includes/footer_js.php']
 			}
+
 		},
 		bower_concat: {
 			all: {
@@ -25,6 +26,15 @@ module.exports = function(grunt) {
 		bowercopy: {
 			options: {
 				report: false
+			},
+			targetbootstrap: {
+				options: {
+					srcPrefix: 'bower_components/bootstrap',
+					destPrefix: 'assets/mypanel'
+				},
+				files: {
+					'fonts': 'fonts'
+				}
 			},
 			targetionic_icons: {
 				options: {
@@ -51,7 +61,7 @@ module.exports = function(grunt) {
 					separator: ';'
 				},
 				files: {
-					'tmp/<%= pkg.name %>.js': ['tmp/digyna-cms_bower.js', 'assets/mypanel/js/app.js','assets/mypanel/js/manage_tables.js']
+					'tmp/<%= pkg.name %>.js': ['tmp/digyna-cms_bower.js', 'assets/mypanel/js/*.js', '!assets/mypanel/js/digyna-cms.min.js']
 				}
 			},
 			sql: {
@@ -110,7 +120,7 @@ module.exports = function(grunt) {
 					closeTag: '<!-- end css template tags -->',
 					ignorePath: '../../../../'
 				},
-				src: ['assets/mypanel/css/main.css'],
+				src: ['assets/mypanel/css/*.css','!assets/mypanel/css/login.css','!assets/mypanel/css/digyna-cms.min.css'],
 				dest: 'application/views/mypanel/includes/header.php'
 			},
 			css_login: {
@@ -140,7 +150,7 @@ module.exports = function(grunt) {
 					closeTag: '<!-- end js template tags -->',
 					ignorePath: '../../../../'
 				},
-				src: ['assets/mypanel/js/manage_tables.js','assets/mypanel/js/app.js'],
+				src: ['assets/mypanel/js/*.js','!assets/mypanel/js/digyna-cms.min.js'],
 				dest: 'application/views/mypanel/includes/footer_js.php'
 			}
 		},
@@ -180,7 +190,8 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-mocha-webdriver');
 	grunt.loadNpmTasks('grunt-composer');
 
-    grunt.registerTask('default', ['wiredep', 'bower_concat', 'concat', 'uglify', 'cssmin', 'tags', 'cachebreaker']);
+    grunt.registerTask('default', ['wiredep', 'bower_concat', 'bowercopy', 'concat', 'uglify', 'cssmin', 'tags', 'cachebreaker']);
     grunt.registerTask('packages', ['composer:update']);
+    grunt.registerTask('debug', ['tags']);
 
 };

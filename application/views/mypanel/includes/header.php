@@ -18,21 +18,17 @@
 		<link rel='stylesheet' href='bower_components/bootstrap/dist/css/bootstrap.css' />
 		<link rel='stylesheet' href='bower_components/jquery-ui/themes/base/jquery-ui.css' />
 		<link rel='stylesheet' href='bower_components/bootstrap3-dialog/dist/css/bootstrap-dialog.min.css' />
-		<link rel='stylesheet' href='bower_components/jasny-bootstrap/dist/css/jasny-bootstrap.css' />
-		<link rel='stylesheet' href='bower_components/smalot-bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css' />
-		<link rel='stylesheet' href='bower_components/bootstrap-select/dist/css/bootstrap-select.css' />
 		<link rel='stylesheet' href='bower_components/bootstrap-table/src/bootstrap-table.css' />
-		<link rel='stylesheet' href='bower_components/bootstrap-daterangepicker/daterangepicker.css' />
-		<link rel='stylesheet' href='bower_components/chartist/dist/chartist.min.css' />
-		<link rel='stylesheet' href='bower_components/chartist-plugin-tooltip/dist/chartist-plugin-tooltip.css' />
+		<link rel='stylesheet' href='bower_components/font-awesome/css/font-awesome.css' />
 		<link rel='stylesheet' href='bower_components/Ionicons/css/ionicons.css' />
 		<!-- endbower -->
 		<!-- start css template tags -->
 		<link rel="stylesheet" type="text/css" href="assets/mypanel/css/main.css"/>
+		<link rel="stylesheet" type="text/css" href="assets/mypanel/css/modal.css"/>
 		<!-- end css template tags -->
 	<?php else : ?>
 		<!-- start mincss template tags -->
-		<link rel="stylesheet" type="text/css" href="assets/mypanel/css/digyna-cms.min.css?rel=50b8e08cd2"/>
+		<link rel="stylesheet" type="text/css" href="assets/mypanel/css/digyna-cms.min.css?rel=9cf65f41cb"/>
 		<!-- end mincss template tags -->
 	<?php endif; ?>
 

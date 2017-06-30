@@ -1,0 +1,24 @@
+@media (min-width: 768px)
+{	
+	.navbar-nav > li > a
+	{
+		padding: 10px 10px 9px;
+	}
+
+	.modal-dlg .modal-dialog
+	{
+		width: 1250px;
+	}
+
+	.modal-dlg-wide .modal-dialog
+	{
+		width: 750px;
+	}
+}
+
+.modal-body
+{
+	max-height: calc(100vh - 212px);
+	overflow-y: auto;
+}
+
