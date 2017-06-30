@@ -23,8 +23,8 @@
 		<link rel='stylesheet' href='bower_components/Ionicons/css/ionicons.css' />
 		<!-- endbower -->
 		<!-- start css template tags -->
-		<link rel="stylesheet" type="text/css" href="assets/mypanel/css/main.css"/>
-		<link rel="stylesheet" type="text/css" href="assets/mypanel/css/modal.css"/>
+		<link rel="stylesheet" type="text/css" href="assets/mypanel/css/main.css?rel=9d5f99fddb"/>
+		<link rel="stylesheet" type="text/css" href="assets/mypanel/css/modal.css?rel=a3ef7476eb"/>
 		<!-- end css template tags -->
 	<?php else : ?>
 		<!-- start mincss template tags -->

@@ -21,7 +21,7 @@
 		<script src="bower_components/twitter-bootstrap-wizard/jquery.bootstrap.wizard.js"></script>
 		<!-- endbower -->
 		<!-- start js template tags -->
-		<script type="text/javascript" src="assets/mypanel/js/app.js"></script>
+		<script type="text/javascript" src="assets/mypanel/js/app.js?rel=1720d7071a"></script>
 		<script type="text/javascript" src="assets/mypanel/js/manage_tables.js"></script>
 		<script type="text/javascript" src="assets/mypanel/js/nominatim.autocomplete.js"></script>
 		<!-- end js template tags -->
@@ -30,4 +30,4 @@
 	<script type="text/javascript" src="assets/mypanel/js/digyna-cms.min.js?rel=05844a85a7"></script>
 	<!-- end minjs template tags -->
 <?php endif; ?>
-<?php $this->load->view('mypanel/includes/app_js'); ?>
+<?php $this->load->view('mypanel/includes/digyna_js'); ?>

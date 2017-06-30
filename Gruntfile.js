@@ -175,7 +175,10 @@ module.exports = function(grunt) {
 				options: {
 					match: [ {
 						'digyna-cms.min.js': 'assets/mypanel/js/digyna-cms.min.js',
-						'digyna-cms.min.css': 'assets/mypanel/css/digyna-cms.min.css'
+						'digyna-cms.min.css': 'assets/mypanel/css/digyna-cms.min.css',
+						'app.js': 'assets/mypanel/js/app.js',
+						'main.css': 'assets/mypanel/css/main.css',
+						'modal.css': 'assets/mypanel/css/modal.css'
 					} ],
 					replacement: 'md5'
 				},
@@ -192,6 +195,6 @@ module.exports = function(grunt) {
 
     grunt.registerTask('default', ['wiredep', 'bower_concat', 'bowercopy', 'concat', 'uglify', 'cssmin', 'tags', 'cachebreaker']);
     grunt.registerTask('packages', ['composer:update']);
-    grunt.registerTask('debug', ['tags']);
+    grunt.registerTask('debug', ['tags','cachebreaker']);
 
 };
