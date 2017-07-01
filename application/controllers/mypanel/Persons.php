@@ -3,14 +3,19 @@
 
 abstract class Persons extends Secure_Controller
 {
+	private $module_id = '';
 	public function __construct($module_id = NULL)
 	{
 		parent::__construct($module_id);
+		$this->module_id=$module_id;
+		
 	}
 
 	public function index()
 	{
+		
 		$data['table_headers'] = $this->xss_clean(get_people_manage_table_headers());
+		$data['permissions'] = $this->User->get_module_grants($this->module_id, $this->User->get_logged_in_employee_info()->person_id,array('export'));
 
 		$this->load->view('mypanel/people/manage', $data);
 	}
@@ -30,7 +35,9 @@ abstract class Persons extends Secure_Controller
 	*/
 	public function get_row($row_id)
 	{
-		$data_row = $this->xss_clean(get_person_data_row($this->Person->get_info($row_id), $this));
+		$permissions = $this->User->get_module_grants($this->module_id, $this->User->get_logged_in_employee_info()->person_id);
+
+		$data_row = $this->xss_clean(get_person_data_row($this->Person->get_info($row_id), $this,$permissions));
 
 		echo json_encode($data_row);
 	}

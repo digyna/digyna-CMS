@@ -411,5 +411,23 @@ class User extends Person
 
 		return $this->db->get()->result_array();
 	}
+
+	/*
+	Obtiene todos los permisos de un modulo
+	 */
+	public function get_module_grants($module_id, $person_id,$permission=array())
+	{
+		$permissions= new stdClass();
+		$permissions->add= $this->has_grant($module_id.'_add', $person_id);
+		$permissions->edit=$this->has_grant($module_id.'_edit', $person_id);
+		$permissions->read=$this->has_grant($module_id.'_read', $person_id);
+		$permissions->delete=$this->has_grant($module_id.'_delete', $person_id);
+		
+		foreach ($permission as $key) {
+			$permissions->$key=$this->has_grant($module_id.'_'.$key, $person_id);
+		}
+
+		return $permissions;
+	}
 }
 ?>

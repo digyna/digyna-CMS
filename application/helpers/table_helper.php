@@ -11,7 +11,7 @@ function transform_headers_readonly($array)
 	return json_encode($result);
 }
 
-function transform_headers($array, $readonly = FALSE, $editable = TRUE)
+function transform_headers($array, $readonly = FALSE, $action = TRUE)
 {
 	$result = array();
 
@@ -20,9 +20,9 @@ function transform_headers($array, $readonly = FALSE, $editable = TRUE)
 		$array = array_merge(array(array('checkbox' => 'select', 'sortable' => FALSE)), $array);
 	}
 
-	if ($editable)
+	if ($action)
 	{
-		$array[] = array('edit' => '');
+		$array[] = array('action' => '');
 	}
 
 	foreach($array as $element)
@@ -64,20 +64,27 @@ function get_people_manage_table_headers()
 	return transform_headers($headers);
 }
 
-function get_person_data_row($person, $controller)
+function get_person_data_row($person, $controller,$permissions)
 {
 	$CI =& get_instance();
 	$controller_name = strtolower(get_class($CI));
-
-	return array (
+	$edit=NULL;
+	$data=array (
 		'people.person_id' => $person->person_id,
 		'last_name' => $person->last_name,
 		'first_name' => $person->first_name,
 		'email' => empty($person->email) ? '' : mailto($person->email, $person->email),
-		'phone_number' => $person->phone_number,
-		'edit' => anchor('mypanel/'.$controller_name."/view/$person->person_id", '<span class="fa fa-edit"></span>',
+		'phone_number' => $person->phone_number
+		);
+
+	if($permissions->edit){
+		$edit = anchor('mypanel/'.$controller_name."/view/$person->person_id", '<span class="fa fa-edit"></span>',
 			array('class'=>'btn btn-warning modal-dlg', 'data-btn-submit' => $CI->lang->line('common_submit'), 'title'=>$CI->lang->line($controller_name.'_update'))
-	));
+			);
+	}
+	$data['action']=$edit;
+
+	return $data;
 }
 
 function get_customer_manage_table_headers()
@@ -115,7 +122,7 @@ function get_customer_data_row($person, $stats, $controller)
 		'total' => to_currency($stats->total),
 		'messages' => empty($person->phone_number) ? '' : anchor("Messages/view/$person->person_id", '<span class="glyphicon glyphicon-phone"></span>', 
 			array('class'=>'modal-dlg', 'data-btn-submit' => $CI->lang->line('common_submit'), 'title'=>$CI->lang->line('messages_sms_send'))),
-		'edit' => anchor($controller_name."/view/$person->person_id", '<span class="glyphicon glyphicon-edit"></span>',
+		'action' => anchor($controller_name."/view/$person->person_id", '<span class="glyphicon glyphicon-edit"></span>',
 			array('class'=>'modal-dlg', 'data-btn-submit' => $CI->lang->line('common_submit'), 'title'=>$CI->lang->line($controller_name.'_update'))
 	));
 }

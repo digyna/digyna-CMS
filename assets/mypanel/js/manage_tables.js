@@ -207,7 +207,6 @@
 			search: options.resource || false,
 			showColumns: true,
 			clickToSelect: true,
-			showExport: true,
 			exportOptions: {
 				fileName: options.resource.replace(/.*\/(.*?)$/g, '$1')
 			},

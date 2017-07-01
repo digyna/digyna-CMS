@@ -22,11 +22,12 @@ class Users extends Persons
 
 		$users = $this->User->search($search, $limit, $offset, $sort, $order);
 		$total_rows = $this->User->get_found_rows($search);
+		$permission = $this->User->get_module_grants('users', $this->User->get_logged_in_employee_info()->person_id);
 
 		$data_rows = array();
 		foreach($users->result() as $person)
 		{
-			$data_rows[] = get_person_data_row($person, $this);
+			$data_rows[] = get_person_data_row($person, $this,$permission);
 		}
 
 		$data_rows = $this->xss_clean($data_rows);

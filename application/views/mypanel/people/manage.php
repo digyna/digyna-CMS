@@ -21,9 +21,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				<!-- start code -->
 				<div id="toolbar">
 					<div class="pull-left btn-toolbar">
+					<?php if($permissions->delete){?>
 						<button id="delete" class="btn btn-default btn-sm">
 							<span class="fa fa-trash">&nbsp;</span><?php echo $this->lang->line("common_delete");?>
 						</button>
+					<?php } ?>
 					</div>
 				</div>
 
@@ -46,7 +48,8 @@ $(document).ready(function()
 		resource: '<?php echo site_url('mypanel/'.$controller_name);?>',
 		headers: <?php echo $table_headers; ?>,
 		pageSize: <?php echo $this->config->item('lines_per_page'); ?>,
-		uniqueId: 'people.person_id'
+		uniqueId: 'people.person_id',
+		showExport: <?php echo ($permissions->export) ? 'true' : 'false'?>
 	});
 
 });
