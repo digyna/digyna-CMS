@@ -11,7 +11,9 @@ class Secure_Controller extends CI_Controller
 		parent::__construct();
 		$this->load->model('mypanel/User');
 		$this->load->library('contact_lib');
+		$this->lang->load('module',$this->Appconfig->get('language_code')); 
 		$model = $this->User;
+		$menu = $this->menu_lib;
 
 		if(!$model->is_logged_in())
 		{
@@ -28,32 +30,67 @@ class Secure_Controller extends CI_Controller
 		$modules = array();
 		foreach($this->Module->get_allowed_modules($logged_in_employee_info->person_id)->result() as $module)
 		{
-			$exploded_module = explode('_', $module->module_id);
-			if(!isset($exploded_module[1])){
-				$modules[] = $module;
-			}
+			switch ($module->module_id) {
+                    case 'contacts':
+                        $n= $this->contact_lib->unread_total_contact();
+                        $module->badge = ($n>0) ? $n : NULL;
+                        break;
+                    default:
+                        break;
+                }
+
+            $exploded_submodule = explode('_', $module->module_id);
+            $href=(count($exploded_submodule)>1)?"submodule":$module->module_id;
+
+                if($href==='submodule'){
+                    if($exploded_submodule[1]==='read'){
+                        $href=$module->module_parent;
+                    }else{
+                        $href="{$exploded_submodule[0]}/{$exploded_submodule[1]}";
+                    }
+                }
+
+            $module->href=base_url("mypanel/$href");
+            $module->icon=$module->module_icon;
+            $module->text=$this->lang->line($module->name_lang_key);
+
+			$modules[] = $module;
 		}
 
-		$submodules = array();
-		foreach($this->Module->get_allowed_modules($logged_in_employee_info->person_id)->result() as $submodule)
+		$config['ul-root']=array('class'=>'main-menu');
+		$config['ul']=array('class'=>'list-unstyled sub-menu collapse in');
+		$config['li-parent']=array('class'=>'has-submenu');
+		$config['a-parent']=array('class'=>"submenu-toggle");
+					
+		$menu->init($config);
+		$menu->setResult($modules, 'module_id', 'module_parent');
+
+		$href = $this->uri->segment_array();
+		$url=array();
+		$str='';
+		foreach ($href as $segment)
 		{
-			$exploded_submodule = explode('_', $submodule->module_id);
-			if(isset($exploded_submodule[1])){
-			
-			$submodule->submodule_id = $this->xss_clean($submodule->module_id);
-			$submodule->module_id = $this->xss_clean($exploded_submodule[0]);
-			$submodules[] = $submodule;
+			if ($segment === reset($href)) {
+				$str.=$segment;
+			}else{
+				$str.=$segment;
+				$url[]=base_url($str);
 			}
+			$str.="/";
 		}
+
+		if($this->uri->total_segments()==1){
+			$url[]=base_url('mypanel/home');
+		}
+
+		$menu->setActiveItem($url);
 
 		// load up global data visible to all the loaded views
-		$data['allowed_modules'] = $modules;
-		$data['allowed_submodules'] = $submodules;
 		$data['contact_info']= $this->contact_lib->get_contact();
 		$data['user_info'] = $logged_in_employee_info;
 		$data['controller_name'] = $module_id;
 		$data['submodule'] = $submodule_id;
-
+		$data['menu'] = $menu->html();
 		$this->load->vars($data);
 	}
 	

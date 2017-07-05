@@ -27,7 +27,7 @@
 		<!-- end js template tags -->
 	<?php else : ?>
 	<!-- start minjs template tags -->
-	<script type="text/javascript" src="assets/mypanel/js/digyna-cms.min.js?rel=0578d58220"></script>
+	<script type="text/javascript" src="assets/mypanel/js/digyna-cms.min.js?rel=72da2ba717"></script>
 	<!-- end minjs template tags -->
 <?php endif; ?>
 <?php $this->load->view('mypanel/includes/digyna_js'); ?>

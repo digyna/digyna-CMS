@@ -54,23 +54,4 @@
 
 })(window.lang = window.lang || {}, jQuery);
 
-    //activa el li del menu
-    <?php
-    if(isset($controller_name))
-    {
-    ?>
-    $('#<?php echo $controller_name;?>').addClass("active");
-   <?php
-   }else{
-   	?>
-   	$('#home').addClass("active");
-    <?php
-    }
-    if(isset($submodule))
-    {
-    ?>
-    $('#<?php echo $submodule;?>').addClass("active");
-   <?php
-   }
-   ?>
 </script>

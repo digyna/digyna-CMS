@@ -27,3 +27,5 @@ $lang["module_sliders"] = "Sliders";
 $lang["module_sliders_desc"] = "";
 $lang["module_profile"] = "Perfil";
 $lang["module_profile_desc"] = "";
+$lang["module_users_read"] = "Todos los usuarios";
+$lang["module_users_read_desc"] = "";

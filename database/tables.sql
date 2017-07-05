@@ -50,8 +50,8 @@ CREATE TABLE `dgn_contacts` (
 -- Volcado de datos para la tabla `dgn_contacts`
 --
 
-INSERT INTO `dgn_contacts` (`contact_id`, `contact_time`, `first_name`, `last_name`, `gender`, `phone_number`, `email`, `title`, `comments`, `read`, `deleted`) VALUES
-(1, '2017-06-17 19:44:15', 'digyna', 'cms', 1, '555-555-55-55', 'mail@example.com', 'Hola!, Esto es un correo desde contacto', 'Para poder administrar, todos los correos, por favor visita la pantalla de contacto en el escritorio.', 0, 0);
+INSERT INTO `dgn_contacts` (`contact_id`, `first_name`, `last_name`, `gender`, `phone_number`, `email`, `title`, `comments`, `read`, `deleted`) VALUES
+(1, 'digyna', 'cms', 1, '555-555-55-55', 'mail@example.com', 'Hola!, Esto es un correo desde contacto', 'Para poder administrar, todos los correos, por favor visita la pantalla de contacto en el escritorio.', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -102,7 +102,6 @@ INSERT INTO `dgn_grants` (`permission_id`, `person_id`) VALUES
 ('sales', 1),
 ('themes', 1),
 ('users', 1),
-('users_add', 1),
 ('users_delete', 1),
 ('users_edit', 1),
 ('users_export', 1),
@@ -116,13 +115,12 @@ INSERT INTO `dgn_grants` (`permission_id`, `person_id`) VALUES
 
 CREATE TABLE `dgn_modules` (
   `name_lang_key` varchar(255) NOT NULL,
-  `desc_lang_key` varchar(255) NOT NULL,
   `sort` int(10) NOT NULL,
   `module_id` varchar(255) NOT NULL,
-  `module_icon` varchar(255) DEFAULT NULL,
+  `module_parent` varchar(255) NOT NULL DEFAULT '0',
+  `module_icon` varchar(255) NOT NULL DEFAULT '',
   `status` int(10) DEFAULT '0',
   PRIMARY KEY (`module_id`),
-  UNIQUE KEY `desc_lang_key` (`desc_lang_key`),
   UNIQUE KEY `name_lang_key` (`name_lang_key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -130,21 +128,25 @@ CREATE TABLE `dgn_modules` (
 -- Volcado de datos para la tabla `dgn_modules`
 --
 
-INSERT INTO `dgn_modules` (`name_lang_key`, `desc_lang_key`, `sort`, `module_id`, `module_icon`, `status`) VALUES
-('module_adverts', 'module_adverts_desc', 2, 'adverts', 'fa fa-bullhorn', 0),
-('module_banners', 'module_banners_desc', 3, 'adverts_banners', '', 0),
-('module_marks', 'module_marks_desc', 4, 'adverts_marks', '', 0),
-('module_ourcustomers', 'module_ourcustomers_desc', 5, 'adverts_ourcustomers', '', 0),
-('module_sliders', 'module_sliders_desc', 6, 'adverts_sliders', '', 0),
-('module_config', 'module_config_desc', 14, 'config', 'icon ion-ios-gear', 0),
-('module_contactss', 'module_contacts_desc', 12, 'contacts', 'icon ion-ios-email-outline', 0),
-('module_customers', 'module_customers_desc', 9, 'customers', 'icon ion-ios-people', 0),
-('module_home', 'module_home_desc', 1, 'home', 'fa fa-desktop', 0),
-('module_products', 'module_products_desc', 7, 'products', 'icon ion-bag', 0),
-('module_profile', 'module_profile_desc', 10, 'profile', 'fa fa-user', 0),
-('module_sales', 'module_sales_desc', 8, 'sales', 'icon ion-ios-cart', 0),
-('module_theme', 'module_theme_desc', 13, 'themes', 'icon ion-paintbrush', 0),
-('module_users', 'module_users_desc', 11, 'users', 'icon ion-person-stalker', 0);
+INSERT INTO `dgn_modules` (`name_lang_key`, `sort`, `module_id`, `module_parent`, `module_icon`, `status`) VALUES
+('module_adverts', 2, 'adverts', '0', 'fa fa-bullhorn', 0),
+('module_banners', 3, 'adverts_banners', 'adverts', '', 0),
+('module_marks', 4, 'adverts_marks', 'adverts', '', 0),
+('module_ourcustomers', 5, 'adverts_ourcustomers', 'adverts', '', 0),
+('module_sliders', 6, 'adverts_sliders', 'adverts', '', 0),
+('module_config', 14, 'config', '0', 'icon ion-ios-gear', 0),
+('module_contacts', 12, 'contacts', '0', 'icon ion-ios-email-outline', 0),
+('module_customers', 9, 'customers', '0', 'icon ion-ios-people', 0),
+('module_customers_add', 18, 'customers_add', 'customers', '', 0),
+('module_customers_read', 17, 'customers_read', 'customers', '', 0),
+('module_home', 1, 'home', '0', 'fa fa-desktop', 0),
+('module_products', 7, 'products', '0', 'icon ion-bag', 0),
+('module_profile', 10, 'profile', '0', 'fa fa-user', 0),
+('module_sales', 8, 'sales', '0', 'icon ion-ios-cart', 0),
+('module_themes', 13, 'themes', '0', 'icon ion-paintbrush', 0),
+('module_users', 11, 'users', '0', 'icon ion-person-stalker', 0),
+('module_users_add', 16, 'users_add', 'users', '', 0),
+('module_users_read', 15, 'users_read', 'users', '', 0);
 
 -- --------------------------------------------------------
 
@@ -185,8 +187,15 @@ INSERT INTO `dgn_people` (`first_name`, `last_name`, `gender`, `phone_number`, `
 CREATE TABLE `dgn_permissions` (
   `permission_id` varchar(255) NOT NULL,
   `module_id` varchar(255) NOT NULL,
+  `module_parent` varchar(255) NOT NULL DEFAULT '0',
+  `name_lang_key` varchar(255) NOT NULL,
+  `desc_lang_key` varchar(255) NOT NULL,
   `location_id` int(10) DEFAULT NULL,
+  `sort` int(10) NOT NULL,
+  `status` int(10) DEFAULT '0',
   PRIMARY KEY (`permission_id`),
+  UNIQUE KEY `desc_lang_key` (`desc_lang_key`),
+  UNIQUE KEY `name_lang_key` (`name_lang_key`),
   KEY `module_id` (`module_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -194,31 +203,31 @@ CREATE TABLE `dgn_permissions` (
 -- Volcado de datos para la tabla `dgn_permissions`
 --
 
-INSERT INTO `dgn_permissions` (`permission_id`, `module_id`, `location_id`) VALUES
-('adverts', 'adverts', NULL),
-('adverts_banners', 'adverts_banners', NULL),
-('adverts_marks', 'adverts_marks', NULL),
-('adverts_ourcustomers', 'adverts_ourcustomers', NULL),
-('adverts_sliders', 'adverts_sliders', NULL),
-('config', 'config', NULL),
-('contacts', 'contacts', NULL),
-('customers', 'customers', NULL),
-('customers_add', 'customers', NULL),
-('customers_delete', 'customers', NULL),
-('customers_edit', 'customers', NULL),
-('customers_export', 'customers', NULL),
-('customers_read', 'customers', NULL),
-('home', 'home', NULL),
-('products', 'products', NULL),
-('profile', 'profile', NULL),
-('sales', 'sales', NULL),
-('themes', 'themes', NULL),
-('users', 'users', NULL),
-('users_add', 'users', NULL),
-('users_delete', 'users', NULL),
-('users_edit', 'users', NULL),
-('users_export', 'users', NULL),
-('users_read', 'users', NULL);
+INSERT INTO `dgn_permissions` (`permission_id`, `module_id`, `module_parent`, `name_lang_key`, `desc_lang_key`, `location_id`, `sort`, `status`) VALUES
+('adverts', 'adverts', '0', 'module_adverts', 'module_adverts_desc', NULL, 2, 0),
+('adverts_banners', 'adverts_banners', 'adverts', 'module_banners', 'module_banners_desc', NULL, 3, 0),
+('adverts_marks', 'adverts_marks', 'adverts', 'module_marks', 'module_marks_desc', NULL, 4, 0),
+('adverts_ourcustomers', 'adverts_ourcustomers', 'adverts', 'module_ourcustomers', 'module_ourcustomers_desc', NULL, 5, 0),
+('adverts_sliders', 'adverts_sliders', 'adverts', 'module_sliders', 'module_sliders_desc', NULL, 6, 0),
+('config', 'config', '0', 'module_config', 'module_config_desc', NULL, 24, 0),
+('contacts', 'contacts', '0', 'module_contacts', 'module_contacts_desc', NULL, 22, 0),
+('customers', 'customers', '0', 'module_customers', 'module_customers_desc', NULL, 9, 0),
+('customers_add', 'customers', 'customers', 'module_customers_add', 'module_customers_add_desc', NULL, 11, 0),
+('customers_delete', 'customers', 'customers', 'module_customers_delete', 'module_customers_delete_desc', NULL, 13, 0),
+('customers_edit', 'customers', 'customers', 'module_customers_edit', 'module_customers_edit_desc', NULL, 12, 0),
+('customers_export', 'customers', 'customers', 'module_customers_export', 'module_customers_export_desc', NULL, 14, 0),
+('customers_read', 'customers', 'customers', 'module_customers_read', 'module_customers_read_desc', NULL, 10, 0),
+('home', 'home', '0', 'module_home', 'module_home_desc', NULL, 1, 0),
+('products', 'products', '0', 'module_products', 'module_products_desc', NULL, 7, 0),
+('profile', 'profile', '0', 'module_profile', 'module_profile_desc', NULL, 15, 0),
+('sales', 'sales', '0', 'module_sales', 'module_sales_desc', NULL, 8, 0),
+('themes', 'themes', '0', 'module_themes', 'module_themes_desc', NULL, 23, 0),
+('users', 'users', '0', 'module_users', 'module_users_desc', NULL, 16, 0),
+('users_add', 'users', 'users', 'module_users_add', 'module_users_add_desc', NULL, 18, 0),
+('users_delete', 'users', 'users', 'module_users_delete', 'module_users_delete_desc', NULL, 20, 0),
+('users_edit', 'users', 'users', 'module_users_edit', 'module_users_edit_desc', NULL, 19, 0),
+('users_export', 'users', 'users', 'module_users_export', 'module_users_export_desc', NULL, 21, 0),
+('users_read', 'users', 'users', 'module_users_read', 'module_users_read_desc', NULL, 17, 0);
 
 -- --------------------------------------------------------
 
@@ -233,10 +242,6 @@ CREATE TABLE `dgn_sessions` (
   `data` blob NOT NULL,
   KEY `ci_sessions_timestamp` (`timestamp`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Volcado de datos para la tabla `dgn_sessions`
---
 
 -- --------------------------------------------------------
 

@@ -37,7 +37,6 @@ class Module extends CI_Model
 	public function get_all_permissions()
 	{
 		$this->db->from('permissions');
-
 		return $this->db->get();
 	}
 	
@@ -63,23 +62,15 @@ class Module extends CI_Model
 	
 	public function get_allowed_modules($person_id)
 	{
-		$this->db->from('modules');
-		$this->db->join('permissions', 'permissions.permission_id = modules.module_id');
-		$this->db->join('grants', 'permissions.permission_id = grants.permission_id');
+		$this->db->select('m.module_id,m.module_parent,m.name_lang_key,m.module_icon');
+		$this->db->from('modules as m');
+		$this->db->join('permissions as p', 'p.permission_id = m.module_id');
+		$this->db->join('grants as g', 'p.permission_id = g.permission_id');
 		$this->db->where('person_id', $person_id);
-		$this->db->where('modules.status', 0);
-		$this->db->order_by('sort', 'asc');
+		$this->db->where('m.status', 0);
+		$this->db->order_by('m.sort', 'asc');
 
 		return $this->db->get();		
-	}
-
-	public function get_allowed_module($module_id)
-	{
-		$this->db->select('status');
-		$this->db->from('modules');
-		$this->db->where('module_id', $module_id);
-
-		return $this->db->get()->row()->status;		
 	}
 }
 ?>
