@@ -10,10 +10,9 @@ class Home extends Secure_Controller
 
 	public function index()
 	{
-		
-
-		
-		$this->load->view('mypanel/adverts/manage');
+		$module_id=$this->Module->get_module('adverts');
+		$exploded_submodule = explode('_', $module_id);
+		redirect("mypanel/adverts/{$exploded_submodule[1]}");
 	}
 }
 ?>

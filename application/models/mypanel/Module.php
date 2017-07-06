@@ -72,5 +72,18 @@ class Module extends CI_Model
 
 		return $this->db->get();		
 	}
+
+	public function get_module($module_id)
+	{
+		$this->db->from('modules as m');
+		$this->db->join('permissions as p', 'p.permission_id = m.module_id');
+		$this->db->join('grants as g', 'p.permission_id = g.permission_id');
+		$this->db->where('m.module_parent', $module_id);
+		$this->db->where('m.status', 0);
+		$this->db->limit(1);
+		$this->db->order_by('m.sort', 'asc');
+
+		return $this->db->get()->row()->module_id;		
+	}
 }
 ?>

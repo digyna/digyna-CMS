@@ -27,7 +27,10 @@ class Secure_Controller extends CI_Controller
 			redirect('mypanel/no_access/' . $module_id . '/' . $submodule_id);
 		}
 
+		$segments=$this->uri->segment_array();
+		$bread_crumb = array();
 		$modules = array();
+		
 		foreach($this->Module->get_allowed_modules($logged_in_employee_info->person_id)->result() as $module)
 		{
 			switch ($module->module_id) {
@@ -55,15 +58,43 @@ class Secure_Controller extends CI_Controller
             $module->text=$this->lang->line($module->name_lang_key);
 
 			$modules[] = $module;
-		}
+			
+			// llena el array bread_crumb
+			foreach($segments as $segment)
+			{
+				if($module->module_id==='home'){
+					$bread_crumb[]=$module;
+				}elseif($module->module_id===$segment) {
+					$bread_crumb[]=$module;
+				}
 
+				$sub=(count($exploded_submodule)>1)?"submodule":$module->module_id;
+
+                if($sub==='submodule'){
+                	if($exploded_submodule[1]===$segment){
+					$bread_crumb[]=$module;
+				}
+                    
+                }	
+			}
+		}
 		$config['ul-root']=array('class'=>'main-menu');
 		$config['ul']=array('class'=>'list-unstyled sub-menu collapse in');
 		$config['li-parent']=array('class'=>'has-submenu');
 		$config['a-parent']=array('class'=>"submenu-toggle");
 					
 		$menu->init($config);
+
 		$menu->setResult($modules, 'module_id', 'module_parent');
+
+		// bread_crumb
+		foreach($bread_crumb as $segment)
+		{
+			$segment->icon=($segment->module_id==='home')?$segment->icon:NULL;
+			$segment->module_parent='0';
+			$segment->badge=NULL;
+			
+		}
 
 		$href = $this->uri->segment_array();
 		$url=array();
@@ -86,11 +117,17 @@ class Secure_Controller extends CI_Controller
 		$menu->setActiveItem($url);
 
 		// load up global data visible to all the loaded views
+		$data['menu'] = $menu->html();
 		$data['contact_info']= $this->contact_lib->get_contact();
 		$data['user_info'] = $logged_in_employee_info;
 		$data['controller_name'] = $module_id;
 		$data['submodule'] = $submodule_id;
-		$data['menu'] = $menu->html();
+		//bread_crumb
+		$config2['ul-root']=array('class'=>'breadcrumb pull-left');
+		$menu->init($config2);
+		$menu->setResult($bread_crumb, 'module_id', 'module_parent');
+		$menu->set_bread_active(base_url($this->uri->uri_string()));
+		$data['menu_bread'] = $menu->html();
 		$this->load->vars($data);
 	}
 	

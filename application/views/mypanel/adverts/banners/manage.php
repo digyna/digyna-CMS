@@ -10,10 +10,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				<!-- PRIMARY CONTENT HEADING -->
 				<div class="primary-content-heading clearfix">
 					<h2><?php echo $this->lang->line($submodule); ?></h2>
-					<ul class="breadcrumb pull-left">
-						<li><i class="icon ion-home"></i><a href="#">Home</a></li>
-						<li><a href="#">Pages</a></li>
-						<li class="active">Blank Page</li>
+					<?php echo $menu_bread;?>
 					</ul>
 				</div>
 				<!-- END PRIMARY CONTENT HEADING -->

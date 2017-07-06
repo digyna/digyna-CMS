@@ -10,10 +10,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				<!-- PRIMARY CONTENT HEADING -->
 				<div class="primary-content-heading clearfix">
 					<h2>Escritorio</h2>
-					<ul class="breadcrumb pull-left">
-						<li><i class="icon ion-home"></i><a href="#">Inicio</a></li>
-						<li class="active">Escritorio</li>
-					</ul>
+					<?php echo $menu_bread;?>
 				</div>
 				<!-- END PRIMARY CONTENT HEADING -->				
 				<div class="row">

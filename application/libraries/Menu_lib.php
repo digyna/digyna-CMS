@@ -4,6 +4,8 @@ class Menu_lib
 {
     private $dropdownIcon = '';
     private $activeClass = 'active';
+    private $active_bread_class = 'active';
+    private $active_bread = '';
     protected $activeItem = '';
     protected $activeHref = '';
     private $arrHref = array();
@@ -65,7 +67,7 @@ class Menu_lib
      */
     public function set($name, $value)
     {
-        $tags = array('ul', 'ul-root', 'li', 'li-parent', 'a', 'a-parent', 'active-class');
+        $tags = array('ul', 'ul-root', 'li', 'li-parent', 'a', 'a-parent', 'active-class','active-class-bread');
         if (in_array($name, $tags))
         {
             $this->arrAttr[$name] = $value;
@@ -99,6 +101,23 @@ class Menu_lib
             $this->activeClass = $activeClass;
         }
         $this->set('active-class', array('class' => $this->activeClass));
+    }
+
+    /**
+     * @param string $href var name
+     * @param string $activeClass (Optional) The Css class for the active item
+     */
+    public function set_bread_active($href, $activeClass = '')
+    {
+        
+            $this->active_bread = $href;
+       
+        
+        if ($activeClass != '')
+        {
+            $this->active_bread_class = $activeClass;
+        }
+        $this->set('active-class-bread', array('class' => $this->active_bread_class));
     }
 
     /**
@@ -246,7 +265,7 @@ class Menu_lib
 
                 $badge = (isset($row->badge)) ? $row->badge : NULL;
                 $target = (isset($row->target)) ? $row->target : '_self';
-                $icon = (isset($row->icon)) ? $row->icon : '';
+                $icon = (isset($row->icon)) ? $row->icon : NULL;
                 $items[$row->$columnParent][$row->$columnID] = array('href' => $row->href, 'text' => $row->text, 'icon' => $icon, 'target' => $target,'badge'=>$badge);
                 unset($b);
             }else{
@@ -293,7 +312,7 @@ class Menu_lib
      */
     protected function getTextItem($item, $isParent)
     {
-        $str = (isset($item['icon'])) ? "<i class=\"{$item['icon']}\"></i> " : '';
+        $str = (isset($item['icon'])) ? "<i class=\"{$item['icon']}\"></i>" : '';
         
             if(isset($item['input'])){
                 $type = (isset($item['input']['type'])) ? "type=\"{$item['input']['type']}\" " : '';
@@ -407,8 +426,15 @@ class Menu_lib
                     $active = ($this->activeItem == $item['href']) ? $this->getAttr('active-class') : '';
                 }
 
-                $str .= '<li ' . $attr . " {$active} >";
-                $str .= '<a href="' . $item['href'] . '"' . $this->getAttr($a) . '>' . $this->getTextItem($item, $isParent) . '</a>';
+                $active_bread = ($this->active_bread == $item['href']) ? $this->getAttr('active-class-bread') : NULL;
+
+                if(is_null($active_bread)){
+                    $str .= '<li ' . $attr . " {$active} >";
+                    $str .= '<a href="' . $item['href'] . '"' . $this->getAttr($a) . '>' . $this->getTextItem($item, $isParent) . '</a>';
+                }else{
+                    $str .= '<li ' . $attr . " {$active_bread} >";
+                    $str .= $this->getTextItem($item, $isParent);
+                }
             }else{
                 $str .= '<li>';
                 $str .= $this->getTextItem($item, $isParent);
