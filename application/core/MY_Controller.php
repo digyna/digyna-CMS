@@ -19,13 +19,10 @@ class Secure_Controller extends CI_Controller
 		{
 			redirect('mypanel/login');
 		}
+		
+		$this->has_module_grant($module_id,$submodule_id);
 
-		$logged_in_employee_info = $model->get_logged_in_employee_info();
-		if(!$model->has_module_grant($module_id, $logged_in_employee_info->person_id) || 
-			(isset($submodule_id) && !$model->has_module_grant($submodule_id, $logged_in_employee_info->person_id)))
-		{
-			redirect('mypanel/no_access/' . $module_id . '/' . $submodule_id);
-		}
+		$logged_in_employee_info = $model->get_logged_in_user_info();
 
 		$segments=$this->uri->segment_array();
 		$bread_crumb = array();
@@ -129,6 +126,18 @@ class Secure_Controller extends CI_Controller
 		$menu->set_bread_active(base_url($this->uri->uri_string()));
 		$data['menu_bread'] = $menu->html();
 		$this->load->vars($data);
+	}
+
+	public function has_module_grant($module_id = NULL, $submodule_id = NULL)
+	{
+		
+		$model = $this->User;
+		$logged_in_employee_info = $model->get_logged_in_user_info();
+		if(!$model->has_module_grant($module_id, $logged_in_employee_info->person_id) || 
+			(isset($submodule_id) && !$model->has_module_grant($submodule_id, $logged_in_employee_info->person_id)))
+		{
+			redirect('mypanel/no_access/' . $module_id . '/' . $submodule_id);
+		}
 	}
 	
 	/*

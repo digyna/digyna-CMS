@@ -1,9 +1,7 @@
 $(document).ready(function(){
-
 	/************************
 	/*	MAIN NAVIGATION
 	/************************/
-
 	$mainMenu = $('.main-menu');
 
 	// init collapse first for browser without transition support (IE9) 
@@ -166,3 +164,94 @@ $(document).ready(function(){
 		});
 
 	}
+	
+	/************************
+	/*	CONFIG GENERAL
+	/************************/
+	$.notifyDefaults({ placement: {
+		align: 'center',
+		from: 'top'
+	}});
+
+	var post = $.post;
+	
+	var csrf_token = function() {
+		return Cookies.get(localStorage.getItem('csrf_cookie_name'));
+	};
+
+	var csrf_token_name = function() {
+		return localStorage.getItem('csrf_token_name');
+	};
+
+	var csrf_form_base = function() {
+		var base = new Object();
+		base[csrf_token_name()] = function () { return csrf_token(); };
+
+		return base;
+	};
+
+	$.post = function() {
+		arguments[1] = $.extend(arguments[1], csrf_form_base());
+		post.apply(this, arguments);
+	};
+
+	var setup_csrf_token = function() {
+		$('input[name="'+csrf_token_name()+'"]').val(csrf_token());
+	};
+
+	setup_csrf_token();
+
+	$.ajaxSetup({
+		dataFilter: function(data) {
+			setup_csrf_token();
+			return data;
+		}
+	});
+
+	var submit = $.fn.submit;
+
+	$.fn.submit = function() {
+		setup_csrf_token();
+		submit.apply(this, arguments);
+	};
+
+	session_sha1 = localStorage.getItem('session_sha1');
+	
+	(function(lang, $) {
+		var language=JSON.parse(localStorage.getItem('language'));
+		$.extend(lang, {
+        line: function(line) {
+        	
+        	if (line == '')
+            {
+            	line = false;
+            }
+
+        	if (language == null) {
+        		line=line + ' (TBD)';
+        	}else{
+        		
+        		if (typeof(language[line]) !== 'undefined') {
+        			line =language[line];
+        		}else if(line !== false){
+        			line=line + ' (TBD)';
+        		}
+        	}
+        	
+            return line;
+        }
+    });
+
+	$.extend(lang, {code:$('html').attr('lang')});
+
+})(window.lang = window.lang || {}, jQuery);
+
+function base_url(value) {
+	var base = $("base").attr("href");
+	if (typeof(value) === 'undefined') {
+		value ='';
+	}
+
+	return base+value;
+}
+var $controller_name = $("controller").attr("name");

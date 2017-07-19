@@ -13,11 +13,13 @@ abstract class Persons extends Secure_Controller
 
 	public function index()
 	{
-		
-		$data['table_headers'] = $this->xss_clean(get_people_manage_table_headers());
-		$data['permissions'] = $this->User->get_module_grants($this->module_id, $this->User->get_logged_in_employee_info()->person_id,array('export'));
+		$data['permissions'] = $this->User->get_module_grants($this->module_id, $this->User->get_logged_in_user_info()->person_id,array('export'));
 
 		$this->load->view('mypanel/people/manage', $data);
+	}
+
+	public function get_table_headers(){
+		echo $this->xss_clean(get_people_manage_table_headers());
 	}
 
 	/*

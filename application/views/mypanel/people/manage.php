@@ -15,6 +15,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				<!-- END PRIMARY CONTENT HEADING -->
 				
 				<!-- start code -->
+				<?php if($permissions->add){?>
+				<div id="title_bar" class="btn-toolbar">
+					<a href="<?php echo site_url('mypanel/'.$controller_name."/add"); ?>" class="btn btn-info btn-sm pull-right" role="button"><span class="glyphicon glyphicon-user">&nbsp</span><?php echo $this->lang->line($controller_name. '_new'); ?></a>
+				</div>
+				<?php } ?>
 				<div id="toolbar">
 					<div class="pull-left btn-toolbar">
 					<?php if($permissions->delete){?>
@@ -26,7 +31,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				</div>
 
 				<div id="table_holder">
-					<table id="table"></table>
+					<table id="table" data-show-export="<?php echo ($permissions->export) ? 'true' : 'false'?>" data-page-size="<?php echo $this->config->item('lines_per_page'); ?>"></table>
 				</div>
 				<!-- end code -->
 			</div>
@@ -35,22 +40,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <?php $this->load->view('mypanel/includes/footer'); ?>
 <?php $this->load->view('mypanel/includes/footer_js'); ?>
 	<!-- start Javascript Generales-->
-<script type="text/javascript">
-$(document).ready(function()
-{
-	<?php $this->load->view('mypanel/includes/bootstrap_tables_locale'); ?>
-
-	table_support.init({
-		resource: '<?php echo site_url('mypanel/'.$controller_name);?>',
-		headers: <?php echo $table_headers; ?>,
-		pageSize: <?php echo $this->config->item('lines_per_page'); ?>,
-		uniqueId: 'people.person_id',
-		showExport: <?php echo ($permissions->export) ? 'true' : 'false'?>
-	});
-
-});
-
-</script>
+	<script type="text/javascript" src="../assets/mypanel/js/modules/people.js"></script>
 	<!-- end Javascript Generales-->
 </body>
 </html>

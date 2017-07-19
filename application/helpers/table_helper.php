@@ -78,8 +78,8 @@ function get_person_data_row($person, $controller,$permissions)
 		);
 
 	if($permissions->edit){
-		$edit = anchor('mypanel/'.$controller_name."/view/$person->person_id", '<span class="fa fa-edit"></span>',
-			array('class'=>'btn btn-warning modal-dlg', 'data-btn-submit' => $CI->lang->line('common_submit'), 'title'=>$CI->lang->line($controller_name.'_update'))
+		$edit = anchor('mypanel/'.$controller_name."/edit/$person->person_id", '<span class="fa fa-edit"></span>',
+			array('class'=>'btn btn-warning')
 			);
 	}
 	$data['action']=$edit;

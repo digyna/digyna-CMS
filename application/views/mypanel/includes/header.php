@@ -1,34 +1,37 @@
 <!DOCTYPE html>
 <!--[if IE 9 ]><html class="ie ie9" lang="en" class="no-js"> <![endif]-->
 <!--[if !(IE)]><!-->
-<html lang="es" class="no-js">
+<html lang="<?php echo current_language_code();?>" class="no-js">
 <!--<![endif]-->
 <head>
 	<title>digyna-cms</title>
 	<link rel="shortcut icon" type="image/x-icon" href="assets/mypanel/ico/favicon.ico">
 	<meta charset="utf-8">
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-	<base href="<?php echo base_url('mypanel');?>" />
+	<base href="<?php echo base_url('mypanel/');?>" />
+	<controller name="<?php echo $controller_name;?>" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	<meta name="description" content="">
 	<meta name="author" content="digyna">
 
-	<?php if ($this->input->get('debug') == 'true') : ?>
+	<?php if ($this->input->cookie('debug') == 'true' || $this->input->get('debug') == 'true') : ?>
 		<!-- bower:css -->
-		<link rel='stylesheet' href='bower_components/bootstrap/dist/css/bootstrap.css' />
-		<link rel='stylesheet' href='bower_components/jquery-ui/themes/base/jquery-ui.css' />
-		<link rel='stylesheet' href='bower_components/bootstrap3-dialog/dist/css/bootstrap-dialog.min.css' />
-		<link rel='stylesheet' href='bower_components/bootstrap-table/src/bootstrap-table.css' />
-		<link rel='stylesheet' href='bower_components/font-awesome/css/font-awesome.css' />
-		<link rel='stylesheet' href='bower_components/Ionicons/css/ionicons.css' />
+		<link rel='stylesheet' href='../bower_components/bootstrap/dist/css/bootstrap.css' />
+		<link rel='stylesheet' href='../bower_components/jquery-ui/themes/base/jquery-ui.css' />
+		<link rel='stylesheet' href='../bower_components/bootstrap3-dialog/dist/css/bootstrap-dialog.min.css' />
+		<link rel='stylesheet' href='../bower_components/bootstrap-table/src/bootstrap-table.css' />
+		<link rel='stylesheet' href='../bower_components/font-awesome/css/font-awesome.css' />
+		<link rel='stylesheet' href='../bower_components/Ionicons/css/ionicons.css' />
+		<link rel='stylesheet' href='../bower_components/formvalidation.io/dist/css/formValidation.min.css' />
+		<link rel='stylesheet' href='../bower_components/sweetalert/dist/sweetalert.css' />
 		<!-- endbower -->
 		<!-- start css template tags -->
-		<link rel="stylesheet" type="text/css" href="assets/mypanel/css/main.css?rel=9d5f99fddb"/>
-		<link rel="stylesheet" type="text/css" href="assets/mypanel/css/modal.css?rel=a3ef7476eb"/>
+		<link rel="stylesheet" type="text/css" href="../assets/mypanel/css/main.css?rel=edc325bcf0"/>
+		<link rel="stylesheet" type="text/css" href="../assets/mypanel/css/modal.css?rel=a3ef7476eb"/>
 		<!-- end css template tags -->
 	<?php else : ?>
 		<!-- start mincss template tags -->
-		<link rel="stylesheet" type="text/css" href="assets/mypanel/css/digyna-cms.min.css?rel=9cf65f41cb"/>
+		<link rel="stylesheet" type="text/css" href="../assets/mypanel/css/digyna-cms.min.css?rel=251c1a66f1"/>
 		<!-- end mincss template tags -->
 	<?php endif; ?>
 

@@ -37,6 +37,7 @@ class Module extends CI_Model
 	public function get_all_permissions()
 	{
 		$this->db->from('permissions');
+		$this->db->order_by('sort', 'asc');
 		return $this->db->get();
 	}
 	

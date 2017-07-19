@@ -1,4 +1,4 @@
-
+﻿
 Escribe fecha y nombre adelante de cada modulo para saber que modulo se encuentra en desarrollo
 
 Modulo Anuncios:
@@ -6,10 +6,13 @@ Modulo Productos:
 Modulo Ventas:
 Modulo Clientes: 22/junio/2017/Erastus
 Modulo Perfil:
-Modulo Usuarios: 22/junio/2017/Erastus
 Modulo Contacto:
 Modulo Apariencia:
 Modulo Configuración:
+
+Modulos terminados
+
+Modulo Usuarios: 19/julio/2017/Erastus
 
 Notas: 
 1 si haces un commit procura que sea funcional!.

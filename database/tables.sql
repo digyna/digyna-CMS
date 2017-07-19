@@ -96,16 +96,22 @@ INSERT INTO `dgn_grants` (`permission_id`, `person_id`) VALUES
 ('config', 1),
 ('contacts', 1),
 ('customers', 1),
+('customers_add', 1),
+('customers_read', 1),
+('customers_delete', 1),
+('customers_edit', 1),
+('customers_export', 1),
 ('home', 1),
 ('products', 1),
 ('profile', 1),
 ('sales', 1),
 ('themes', 1),
 ('users', 1),
+('users_add', 1),
+('users_read', 1),
 ('users_delete', 1),
 ('users_edit', 1),
-('users_export', 1),
-('users_read', 1);
+('users_export', 1);
 
 -- --------------------------------------------------------
 
@@ -166,7 +172,6 @@ CREATE TABLE `dgn_people` (
   `state` varchar(255) NOT NULL,
   `zip` varchar(255) NOT NULL,
   `country` varchar(255) NOT NULL,
-  `comments` text NOT NULL,
   `person_id` int(10) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`person_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
@@ -175,8 +180,8 @@ CREATE TABLE `dgn_people` (
 -- Volcado de datos para la tabla `dgn_people`
 --
 
-INSERT INTO `dgn_people` (`first_name`, `last_name`, `gender`, `phone_number`, `email`, `address_1`, `address_2`, `city`, `state`, `zip`, `country`, `comments`, `person_id`) VALUES
-('admin', '.', NULL, '555-555-5555', 'demo@demo.com', 'Address 1', '', '', '', '', '', '', 1);
+INSERT INTO `dgn_people` (`first_name`, `last_name`, `gender`, `phone_number`, `email`, `address_1`, `address_2`, `city`, `state`, `zip`, `country`, `person_id`) VALUES
+('admin', '.', NULL, '555-555-5555', 'demo@demo.com', 'Address 1', '', '', '', '', '', 1);
 
 -- --------------------------------------------------------
 

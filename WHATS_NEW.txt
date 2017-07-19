@@ -1,0 +1,7 @@
++ New feature
+* Enhanced feature
+- Removed feature
+
+Version 1.0.0 (19.07.2017)
+--------------------------
+	+ Module users

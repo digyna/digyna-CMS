@@ -4,7 +4,7 @@ module.exports = function(grunt) {
 		pkg: grunt.file.readJSON('package.json'),
 		wiredep: {
 			task: {
-				ignorePath: '../../../../',
+				ignorePath: '../../../',
 				src: ['application/views/mypanel/includes/header.php','application/views/mypanel/includes/footer_js.php']
 			}
 
@@ -15,7 +15,8 @@ module.exports = function(grunt) {
 					'bootstrap': ["dist/css/bootstrap.css", "dist/js/bootstrap.js"],
 					'bootstrap-table': [ "src/bootstrap-table.js", "src/bootstrap-table.css", "dist/extensions/export/bootstrap-table-export.js", "dist/extensions/mobile/bootstrap-table-mobile.js"],
 					'font-awesome': ["css/font-awesome.css"],
-					"jquery-slimscroll": ["jquery.slimscroll.js"]
+					"jquery-slimscroll": ["jquery.slimscroll.js"],
+					"formvalidation.io": ["dist/css/formValidation.min.css", "dist/js/formValidation.min.js", "dist/js/framework/bootstrap.min.js"]
 				},
 				dest: {
 					'js': 'tmp/digyna-cms_bower.js',
@@ -108,7 +109,7 @@ module.exports = function(grunt) {
 					scriptTemplate: '<rel type="text/css" src="{{ path }}"></rel>',
 					openTag: '<!-- start mincss template tags -->',
 					closeTag: '<!-- end mincss template tags -->',
-					ignorePath: '../../../../'
+					ignorePath: '../../../'
 				},
 				src: ['assets/mypanel/css/*.min.css'],
 				dest: 'application/views/mypanel/includes/header.php',
@@ -118,7 +119,7 @@ module.exports = function(grunt) {
 					scriptTemplate: '<rel type="text/css" src="{{ path }}"></rel>',
 					openTag: '<!-- start css template tags -->',
 					closeTag: '<!-- end css template tags -->',
-					ignorePath: '../../../../'
+					ignorePath: '../../../'
 				},
 				src: ['assets/mypanel/css/*.css','!assets/mypanel/css/login.css','!assets/mypanel/css/digyna-cms.min.css'],
 				dest: 'application/views/mypanel/includes/header.php'
@@ -138,7 +139,7 @@ module.exports = function(grunt) {
 					scriptTemplate: '<script type="text/javascript" src="{{ path }}"></script>',
 					openTag: '<!-- start minjs template tags -->',
 					closeTag: '<!-- end minjs template tags -->',
-                    ignorePath: '../../../../'
+                    ignorePath: '../../../'
 				},
 				src: ['assets/mypanel/js/*min.js'],
 				dest: 'application/views/mypanel/includes/footer_js.php'
@@ -148,7 +149,7 @@ module.exports = function(grunt) {
 					scriptTemplate: '<script type="text/javascript" src="{{ path }}"></script>',
 					openTag: '<!-- start js template tags -->',
 					closeTag: '<!-- end js template tags -->',
-					ignorePath: '../../../../'
+					ignorePath: '../../../'
 				},
 				src: ['assets/mypanel/js/*.js','!assets/mypanel/js/digyna-cms.min.js'],
 				dest: 'application/views/mypanel/includes/footer_js.php'
@@ -195,6 +196,6 @@ module.exports = function(grunt) {
 
     grunt.registerTask('default', ['wiredep', 'bower_concat', 'bowercopy', 'concat', 'uglify', 'cssmin', 'tags', 'cachebreaker']);
     grunt.registerTask('packages', ['composer:update']);
-    grunt.registerTask('debug', ['tags','cachebreaker']);
+    grunt.registerTask('debug', ['wiredep','tags','cachebreaker']);
 
 };

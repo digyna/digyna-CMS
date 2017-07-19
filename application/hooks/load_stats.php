@@ -12,7 +12,10 @@ function load_stats()
         $session_sha1 = sha1("blob " .strlen( $d ). "\0" . $d);
 
         $CI->session->set_userdata('session_sha1', substr($session_sha1, 0, 7));
-
+        echo localStorage_setItem('session_sha1', substr($session_sha1, 0, 7));
+        echo localStorage_setItem('csrf_token_name', $CI->security->get_csrf_token_name());
+        echo localStorage_setItem('csrf_cookie_name', $CI->config->item('csrf_cookie_name'));
+        echo localStorage_setItem('language',$CI->lang->language);
     }
 }
 

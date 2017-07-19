@@ -11,7 +11,30 @@ class User extends Person
 		$this->db->where('users.person_id', $person_id);
 
 		return ($this->db->get()->num_rows() == 1);
-	}	
+	}
+
+	/*
+	Determina si existe el username
+	*/
+	public function exists_user($username)
+	{
+		$this->db->from('users');
+		$this->db->where('username', $username);
+
+		return ($this->db->get()->num_rows() == 1);
+	}
+
+	/*
+	Determina si existe el email
+	*/
+	public function exists_email($email)
+	{
+		$this->db->from('users');
+		$this->db->join('people', 'people.person_id = users.person_id');
+		$this->db->where('people.email', $email);
+
+		return ($this->db->get()->num_rows() == 1);
+	}
 
 	/*
 	Gets total of rows
@@ -42,11 +65,11 @@ class User extends Person
 	/*
 	Gets information about a particular employee
 	*/
-	public function get_info($employee_id)
+	public function get_info($user_id)
 	{
 		$this->db->from('users');	
 		$this->db->join('people', 'people.person_id = users.person_id');
-		$this->db->where('users.person_id', $employee_id);
+		$this->db->where('users.person_id', $user_id);
 		$query = $this->db->get();
 
 		if($query->num_rows() == 1)
@@ -72,11 +95,11 @@ class User extends Person
 	/*
 	Gets information about multiple users
 	*/
-	public function get_multiple_info($employee_ids)
+	public function get_multiple_info($user_ids)
 	{
 		$this->db->from('users');
 		$this->db->join('people', 'people.person_id = users.person_id');		
-		$this->db->where_in('users.person_id', $employee_ids);
+		$this->db->where_in('users.person_id', $user_ids);
 		$this->db->order_by('last_name', 'asc');
 
 		return $this->db->get();		
@@ -85,38 +108,42 @@ class User extends Person
 	/*
 	Inserts or updates an employee
 	*/
-	public function save_employee(&$person_data, &$employee_data, &$grants_data, $employee_id = FALSE)
+	public function save_user(&$person_data, &$user_data, &$grants_data, $user_id = FALSE)
 	{
 		$success = FALSE;
 
 		//Run these queries as a transaction, we want to make sure we do all or nothing
 		$this->db->trans_start();
 
-		if(parent::save($person_data, $employee_id))
+		if(parent::save($person_data, $user_id))
 		{
-			if(!$employee_id || !$this->exists($employee_id))
+			if(!$user_id || !$this->exists($user_id))
 			{
-				$employee_data['person_id'] = $employee_id = $person_data['person_id'];
-				$success = $this->db->insert('users', $employee_data);
+				$user_data['person_id'] = $user_id = $person_data['person_id'];
+				$success = $this->db->insert('users', $user_data);
 			}
 			else
 			{
-				$this->db->where('person_id', $employee_id);
-				$success = $this->db->update('users', $employee_data);
+				if(!empty($user_data)){
+					$this->db->where('person_id', $user_id);
+					$success = $this->db->update('users', $user_data);
+				}else{
+					$success =TRUE;
+				}
 			}
 
 			//We have either inserted or updated a new employee, now lets set permissions. 
 			if($success)
 			{
 				//First lets clear out any grants the employee currently has.
-				$success = $this->db->delete('grants', array('person_id' => $employee_id));
+				$success = $this->db->delete('grants', array('person_id' => $user_id));
 				
 				//Now insert the new grants
 				if($success)
 				{
 					foreach($grants_data as $permission_id)
 					{
-						$success = $this->db->insert('grants', array('permission_id' => $permission_id, 'person_id' => $employee_id));
+						$success = $this->db->insert('grants', array('permission_id' => $permission_id, 'person_id' => $user_id));
 					}
 				}
 			}
@@ -132,12 +159,12 @@ class User extends Person
 	/*
 	Deletes one employee
 	*/
-	public function delete($employee_id)
+	public function delete($user_id)
 	{
 		$success = FALSE;
 
 		//Don't let users delete theirself
-		if($employee_id == $this->get_logged_in_employee_info()->person_id)
+		if($user_id == $this->get_logged_in_user_info()->person_id)
 		{
 			return FALSE;
 		}
@@ -146,9 +173,9 @@ class User extends Person
 		$this->db->trans_start();
 
 		//Delete permissions
-		if($this->db->delete('grants', array('person_id' => $employee_id)))
+		if($this->db->delete('grants', array('person_id' => $user_id)))
 		{	
-			$this->db->where('person_id', $employee_id);
+			$this->db->where('person_id', $user_id);
 			$success = $this->db->update('users', array('deleted' => 1));
 		}
 
@@ -160,12 +187,12 @@ class User extends Person
 	/*
 	Deletes a list of users
 	*/
-	public function delete_list($employee_ids)
+	public function delete_list($users_ids)
 	{
 		$success = FALSE;
 
 		//Don't let users delete theirself
-		if(in_array($this->get_logged_in_employee_info()->person_id, $employee_ids))
+		if(in_array($this->get_logged_in_user_info()->person_id, $users_ids))
 		{
 			return FALSE;
 		}
@@ -173,12 +200,12 @@ class User extends Person
 		//Run these queries as a transaction, we want to make sure we do all or nothing
 		$this->db->trans_start();
 
-		$this->db->where_in('person_id', $employee_ids);
+		$this->db->where_in('person_id', $users_ids);
 		//Delete permissions
 		if($this->db->delete('grants'))
 		{
 			//delete from employee table
-			$this->db->where_in('person_id', $employee_ids);
+			$this->db->where_in('person_id', $users_ids);
 			$success = $this->db->update('users', array('deleted' => 1));
 		}
 
@@ -346,7 +373,7 @@ class User extends Person
 	/*
 	Gets information about the currently logged in employee.
 	*/
-	public function get_logged_in_employee_info()
+	public function get_logged_in_user_info()
 	{
 		if($this->is_logged_in())
 		{

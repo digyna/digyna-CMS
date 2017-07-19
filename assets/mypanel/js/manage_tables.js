@@ -144,8 +144,18 @@
 	};
 
 	var do_delete = function (url, ids) {
-		if (confirm($.fn.bootstrapTable.defaults.formatConfirmDelete())) {
-			$.post((url || options.resource) + '/delete', {'ids[]': ids || selected_ids()}, function (response) {
+		swal({
+			title: lang.line('common_confirm_delete_title'),
+      		text: lang.line($controller_name+'_confirm_delete'),
+      		type: "warning",
+      		showCancelButton: true,
+      		confirmButtonText: lang.line("common_accept"),
+      		cancelButtonText: lang.line("common_cancel"),
+      		closeOnConfirm: false,
+      		closeOnCancel: false
+      	}, function(isConfirm) {
+      		if (isConfirm) {
+      			$.post((url || options.resource) + '/delete', {'ids[]': ids || selected_ids()}, function (response) {
 				//delete was successful, remove checkbox rows
 				if (response.success) {
 					var selector = ids ? row_selector(ids) : selected_rows();
@@ -163,14 +173,33 @@
 								}
 							});
 					});
-					$.notify(response.message, { type: 'success' });
+					swal({
+						title: lang.line('common_confirm_delete_success_title'),
+						text: response.message,
+						timer: 1500,
+						type:'success',
+						showConfirmButton: false
+					});
 				} else {
-					$.notify(response.message, { type: 'danger' });
+					swal({
+						title: lang.line('common_confirm_delete_error_title'),
+						text: response.message,
+						timer: 1500,
+						type:'error',
+						showConfirmButton: false
+					});
 				}
-			}, "json");
-		} else {
-			return false;
-		}
+				}, "json");
+			} else {
+      			swal({
+      				title: lang.line('common_confirm_delete_cancel_title'),
+      				text: lang.line('common_confirm_delete_cancel_message'),
+      				timer: 1300,
+      				type:'error',
+      				showConfirmButton: false
+      			});
+      		}
+      	});
 	};
 
 	var load_success = function(callback) {
@@ -197,51 +226,53 @@
 		options = _options;
 		enable_actions = enable_actions(options.enableActions);
 		load_success = load_success(options.onLoadSuccess);
-		$('#table').bootstrapTable($.extend(options, {
-			columns: options.headers,
-			url: options.resource + '/search',
-			sidePagination: 'server',
-			pageSize: options.pageSize,
-			striped: true,
-			pagination: true,
-			search: options.resource || false,
-			showColumns: true,
-			clickToSelect: true,
-			exportOptions: {
-				fileName: options.resource.replace(/.*\/(.*?)$/g, '$1')
-			},
-			onPageChange: function(response) {
-				load_success(response);
-				enable_actions();
-			},
-			toolbar: '#toolbar',
-			uniqueId: options.uniqueId || 'id',
-			trimOnSearch: false,
-			onCheck: enable_actions,
-			onUncheck: enable_actions,
-			onCheckAll: enable_actions,
-			onUncheckAll: enable_actions,
-			onLoadSuccess: function(response) {
-				load_success(response);
-				enable_actions();
-			},
-			onColumnSwitch : function(field, checked) {
-				var user_settings = localStorage[options.employee_id];
-				user_settings = (user_settings && JSON.parse(user_settings)) || {};
-				user_settings[options.resource] = user_settings[options.resource] || {};
-				user_settings[options.resource][field] = checked;
-				localStorage[options.employee_id] = JSON.stringify(user_settings);
-			},
-			queryParamsType: 'limit',
-			iconSize: 'sm',
-			silentSort: true,
-			paginationVAlign: 'bottom',
-			escape: false
-		}));
-		enable_actions();
-		init_delete();
-		toggle_column_visbility();
-		dialog_support.init("button.modal-dlg");
+		$.get( options.resource + '/get_table_headers', function(data){
+			$('#table').bootstrapTable($.extend(options, {
+				columns: data,
+				url: options.resource + '/search',
+				sidePagination: 'server',
+				pageSize: options.pageSize,
+				striped: true,
+				pagination: true,
+				search: options.resource || false,
+				showColumns: true,
+				clickToSelect: true,
+				exportOptions: {
+					fileName: options.resource.replace(/.*\/(.*?)$/g, '$1')
+				},
+				onPageChange: function(response) {
+					load_success(response);
+					enable_actions();
+				},
+				toolbar: '#toolbar',
+				uniqueId: options.uniqueId || 'id',
+				trimOnSearch: false,
+				onCheck: enable_actions,
+				onUncheck: enable_actions,
+				onCheckAll: enable_actions,
+				onUncheckAll: enable_actions,
+				onLoadSuccess: function(response) {
+					load_success(response);
+					enable_actions();
+				},
+				onColumnSwitch : function(field, checked) {
+					var user_settings = localStorage[options.employee_id];
+					user_settings = (user_settings && JSON.parse(user_settings)) || {};
+					user_settings[options.resource] = user_settings[options.resource] || {};
+					user_settings[options.resource][field] = checked;
+					localStorage[options.employee_id] = JSON.stringify(user_settings);
+				},
+				queryParamsType: 'limit',
+				iconSize: 'sm',
+				silentSort: true,
+				paginationVAlign: 'bottom',
+				escape: false
+			}));
+			enable_actions();
+			init_delete();
+			toggle_column_visbility();
+			dialog_support.init("button.modal-dlg");
+		}, "json");
 	};
 
 	var init_delete = function (confirmMessage) {
@@ -285,7 +316,7 @@
 					};
 					refresh();
 				}
-				$.notify(message, {type: 'success' });
+				$.notify(message,'success');
 			}
 			return false;
 		};
