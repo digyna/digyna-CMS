@@ -40,7 +40,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <?php $this->load->view('mypanel/includes/footer'); ?>
 <?php $this->load->view('mypanel/includes/footer_js'); ?>
 	<!-- start Javascript Generales-->
-	<script type="text/javascript" src="../assets/mypanel/js/modules/people.js"></script>
+	<script type="text/javascript" src="../assets/mypanel/js/modules/dist/people.min.js?rel=9421ce35b4"></script>
 	<!-- end Javascript Generales-->
 </body>
 </html>

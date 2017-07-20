@@ -5,7 +5,7 @@
 <!--<![endif]-->
 <head>
 	<title>digyna-cms</title>
-	<link rel="shortcut icon" type="image/x-icon" href="assets/mypanel/ico/favicon.ico">
+	<link rel="shortcut icon" type="image/x-icon" href="../assets/mypanel/ico/favicon.ico">
 	<meta charset="utf-8">
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<base href="<?php echo base_url('mypanel/');?>" />
@@ -14,7 +14,7 @@
 	<meta name="description" content="">
 	<meta name="author" content="digyna">
 
-	<?php if ($this->input->cookie('debug') == 'true' || $this->input->get('debug') == 'true') : ?>
+	<?php if ($this->input->cookie('debug') == 'true') : ?>
 		<!-- bower:css -->
 		<link rel='stylesheet' href='../bower_components/bootstrap/dist/css/bootstrap.css' />
 		<link rel='stylesheet' href='../bower_components/jquery-ui/themes/base/jquery-ui.css' />

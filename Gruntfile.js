@@ -82,6 +82,18 @@ module.exports = function(grunt) {
 				files: {
 					'assets/mypanel/js/<%= pkg.name %>.min.js': ['tmp/<%= pkg.name %>.js']
 				}
+			},
+			build: {
+				options: {
+					banner: '/*! <%= grunt.template.today("dd-mm-yyyy") %> */\n'
+			    },
+				files: [{
+					expand: true,	
+					src: '*.js',
+					dest: 'assets/mypanel/js/modules/dist',
+					cwd: 'assets/mypanel/js/modules/src',
+					ext: '.min.js'
+				}]
 			}
 		},
 		cssmin: {
@@ -175,16 +187,47 @@ module.exports = function(grunt) {
 			dev: {
 				options: {
 					match: [ {
+						'main.css': 'assets/mypanel/css/main.css',
+						'modal.css': 'assets/mypanel/css/modal.css',
 						'digyna-cms.min.js': 'assets/mypanel/js/digyna-cms.min.js',
 						'digyna-cms.min.css': 'assets/mypanel/css/digyna-cms.min.css',
 						'app.js': 'assets/mypanel/js/app.js',
-						'main.css': 'assets/mypanel/css/main.css',
-						'modal.css': 'assets/mypanel/css/modal.css'
+						'home.min.js': 'assets/mypanel/js/modules/dist/home.min.js',
+						'banners.min.js': 'assets/mypanel/js/modules/dist/banners.min.js',
+						'config.min.js': 'assets/mypanel/js/modules/dist/config.min.js',
+						'contacts.min.js': 'assets/mypanel/js/modules/dist/contacts.min.js',
+						'customers.min.js': 'assets/mypanel/js/modules/dist/customers.min.js',
+						'marks.min.js': 'assets/mypanel/js/modules/dist/marks.min.js',
+						'ourcustomers.min.js': 'assets/mypanel/js/modules/dist/ourcustomers.min.js',
+						'people.min.js': 'assets/mypanel/js/modules/dist/people.min.js',
+						'products.min.js': 'assets/mypanel/js/modules/dist/products.min.js',
+						'profile.min.js': 'assets/mypanel/js/modules/dist/profile.min.js',
+						'sales.min.js': 'assets/mypanel/js/modules/dist/sales.min.js',
+						'sliders.min.js': 'assets/mypanel/js/modules/dist/sliders.min.js',
+						'themes.min.js': 'assets/mypanel/js/modules/dist/themes.min.js',
+						'users.min.js': 'assets/mypanel/js/modules/dist/users.min.js'
 					} ],
 					replacement: 'md5'
 				},
 				files: {
-					src: ['application/views/mypanel/includes/header.php', 'application/views/mypanel/includes/footer_js.php']
+					src: [
+					'application/views/mypanel/includes/header.php',
+					'application/views/mypanel/includes/footer_js.php',
+					'application/views/mypanel/home.php',
+					'application/views/mypanel/adverts/banners/manage.php',
+					'application/views/mypanel/adverts/marks/manage.php',
+					'application/views/mypanel/adverts/ourcustomers/manage.php',
+					'application/views/mypanel/adverts/sliders/manage.php',
+					'application/views/mypanel/config/manage.php',
+					'application/views/mypanel/contacts/manage.php',
+					'application/views/mypanel/customers/manage.php',
+					'application/views/mypanel/people/manage.php',
+					'application/views/mypanel/products/manage.php',
+					'application/views/mypanel/profile/manage.php',
+					'application/views/mypanel/sales/manage.php',
+					'application/views/mypanel/themes/manage.php',
+					'application/views/mypanel/users/manage.php'
+					]
 				}
 			}
 		}
@@ -196,6 +239,6 @@ module.exports = function(grunt) {
 
     grunt.registerTask('default', ['wiredep', 'bower_concat', 'bowercopy', 'concat', 'uglify', 'cssmin', 'tags', 'cachebreaker']);
     grunt.registerTask('packages', ['composer:update']);
-    grunt.registerTask('debug', ['wiredep','tags','cachebreaker']);
+    grunt.registerTask('debug', ['wiredep','uglify:build','tags','cachebreaker']);
 
 };

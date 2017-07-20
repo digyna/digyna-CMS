@@ -23,7 +23,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <?php $this->load->view('mypanel/includes/footer'); ?>
 <?php $this->load->view('mypanel/includes/footer_js'); ?>
 	<!-- start Javascript Generales-->
-	<script type="text/javascript" src="assets/mypanel/js/modules/contacts.js"></script>
+	<script type="text/javascript" src="../assets/mypanel/js/modules/dist/contacts.min.js?rel=d16ae9dbae"></script>
 	<!-- end Javascript Generales-->
 </body>
 </html>

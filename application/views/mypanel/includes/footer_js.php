@@ -1,4 +1,4 @@
-<?php if ($this->input->cookie('debug') == 'true' || $this->input->get('debug') == 'true') : ?>
+<?php if ($this->input->cookie('debug') == 'true') : ?>
 		<!-- bower:js -->
 		<script src="../bower_components/jquery/dist/jquery.js"></script>
 		<script src="../bower_components/jquery-form/jquery.form.js"></script>
@@ -30,6 +30,6 @@
 		<!-- end js template tags -->
 	<?php else : ?>
 	<!-- start minjs template tags -->
-	<script type="text/javascript" src="../assets/mypanel/js/digyna-cms.min.js?rel=3600f31de5"></script>
+	<script type="text/javascript" src="../assets/mypanel/js/digyna-cms.min.js?rel=f0f562811c"></script>
 	<!-- end minjs template tags -->
 <?php endif; ?>

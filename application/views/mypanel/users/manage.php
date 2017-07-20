@@ -125,7 +125,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <?php $this->load->view('mypanel/includes/footer'); ?>
 <?php $this->load->view('mypanel/includes/footer_js'); ?>
 	<!-- start Javascript Generales-->
-	<script type="text/javascript" src="../assets/mypanel/js/modules/users.js"></script>
+	<script type="text/javascript" src="../assets/mypanel/js/modules/dist/users.min.js?rel=ed6ec47168"></script>
 	<!-- end Javascript Generales-->
 </body>
 </html>
