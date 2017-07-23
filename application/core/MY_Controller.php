@@ -24,10 +24,26 @@ class Secure_Controller extends CI_Controller
 
 		$logged_in_employee_info = $model->get_logged_in_user_info();
 
-		$segments=$this->uri->segment_array();
+		$segment_array=$this->uri->segment_array();
+		$segments= array();
+		$str='';
+		foreach ($segment_array as $segment)
+		{
+			if ($segment !== reset($segment_array)) {
+				
+				$str.=$segment;
+				if($segment=='profile'){
+					if($model->has_module_grant('users', $logged_in_employee_info->person_id)){
+						$segments[0]='users';
+					}
+				}
+
+				$segments[]=$str;
+				$str.="_";
+			}
+		}
 		$bread_crumb = array();
 		$modules = array();
-		
 		foreach($this->Module->get_allowed_modules($logged_in_employee_info->person_id)->result() as $module)
 		{
 			switch ($module->module_id) {
@@ -38,7 +54,6 @@ class Secure_Controller extends CI_Controller
                     default:
                         break;
                 }
-
             $exploded_submodule = explode('_', $module->module_id);
             $href=(count($exploded_submodule)>1)?"submodule":$module->module_id;
 
@@ -59,21 +74,28 @@ class Secure_Controller extends CI_Controller
 			// llena el array bread_crumb
 			foreach($segments as $segment)
 			{
+				
 				if($module->module_id==='home'){
-					$bread_crumb[]=$module;
+					$bread_crumb[0]=$module;
+
 				}elseif($module->module_id===$segment) {
-					$bread_crumb[]=$module;
-				}
 
-				$sub=(count($exploded_submodule)>1)?"submodule":$module->module_id;
-
-                if($sub==='submodule'){
-                	if($exploded_submodule[1]===$segment){
-					$bread_crumb[]=$module;
+					if(current($segments)===$segment){
+						$str=$bread_crumb[0];
+						array_shift($bread_crumb);
+						array_unshift($bread_crumb, $str, $module);
+					}else{
+						$bread_crumb[]=$module;
+					}
 				}
-                    
-                }	
 			}
+
+			 if($module->module_id=='profile'){
+            	if($model->has_module_grant('users', $logged_in_employee_info->person_id)){
+            		$module->module_parent='users';
+            		$module->icon='';
+            	}
+            }
 		}
 		$config['ul-root']=array('class'=>'main-menu');
 		$config['ul']=array('class'=>'list-unstyled sub-menu collapse in');
@@ -102,6 +124,12 @@ class Secure_Controller extends CI_Controller
 				$str.=$segment;
 			}else{
 				$str.=$segment;
+				if($segment=='profile'){
+					if($model->has_module_grant('users', $logged_in_employee_info->person_id)){
+						$url[]=base_url('mypanel/users');
+					}
+				}
+
 				$url[]=base_url($str);
 			}
 			$str.="/";

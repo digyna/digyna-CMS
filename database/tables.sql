@@ -155,8 +155,8 @@ INSERT INTO `dgn_modules` (`name_lang_key`, `sort`, `module_id`, `module_parent`
 ('module_sales', 8, 'sales', '0', 'icon ion-ios-cart', 0),
 ('module_themes', 13, 'themes', '0', 'icon ion-paintbrush', 0),
 ('module_users', 11, 'users', '0', 'icon ion-person-stalker', 0),
-('module_users_add', 16, 'users_add', 'users', '', 0),
-('module_users_read', 15, 'users_read', 'users', '', 0);
+('module_users_add', 2, 'users_add', 'users', '', 0),
+('module_users_read', 1, 'users_read', 'users', '', 0);
 
 -- --------------------------------------------------------
 
