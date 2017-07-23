@@ -75,25 +75,109 @@ module.exports = function(grunt) {
 			}
 		},
 		uglify: {
-			options: {
-				banner: '/*! <%= pkg.name %> <%= grunt.template.today("dd-mm-yyyy") %> */\n'
-			},
-			dist: {
+			main: {
+				options: {
+					banner: '/*! <%= pkg.name %> <%= grunt.template.today("dd-mm-yyyy") %> */\n'
+				},
 				files: {
 					'assets/mypanel/js/<%= pkg.name %>.min.js': ['tmp/<%= pkg.name %>.js']
 				}
 			},
-			build: {
+			users: {
 				options: {
-					banner: '/*! <%= grunt.template.today("dd-mm-yyyy") %> */\n'
-			    },
-				files: [{
-					expand: true,	
-					src: '*.js',
-					dest: 'assets/mypanel/js/modules/dist',
-					cwd: 'assets/mypanel/js/modules/src',
-					ext: '.min.js'
-				}]
+					banner: '/*! users.min.js <%= grunt.template.today("dd-mm-yyyy") %> */\n'
+				},
+				files: {
+					'assets/mypanel/js/modules/dist/users.min.js': ['assets/mypanel/js/modules/src/users.js']
+				}
+			},
+			customers: {
+				options: {
+					banner: '/*! customers.min.js <%= grunt.template.today("dd-mm-yyyy") %> */\n'
+				},
+				files: {
+					'assets/mypanel/js/modules/dist/customers.min.js': ['assets/mypanel/js/modules/src/customers.js']
+				}
+			},
+			profile: {
+				options: {
+					banner: '/*! profile.min.js <%= grunt.template.today("dd-mm-yyyy") %> */\n'
+				},
+				files: {
+					'assets/mypanel/js/modules/dist/profile.min.js': ['assets/mypanel/js/modules/src/profile.js']
+				}
+			},
+			home: {
+				options: {
+					banner: '/*! home.min.js <%= grunt.template.today("dd-mm-yyyy") %> */\n'
+				},
+				files: {
+					'assets/mypanel/js/modules/dist/home.min.js': ['assets/mypanel/js/modules/src/home.js']
+				}
+			},
+			banners: {
+				options: {
+					banner: '/*! banners.min.js <%= grunt.template.today("dd-mm-yyyy") %> */\n'
+				},
+				files: {
+					'assets/mypanel/js/modules/dist/banners.min.js': ['assets/mypanel/js/modules/src/banners.js']
+				}
+			},
+			config: {
+				options: {
+					banner: '/*! config.min.js <%= grunt.template.today("dd-mm-yyyy") %> */\n'
+				},
+				files: {
+					'assets/mypanel/js/modules/dist/config.min.js': ['assets/mypanel/js/modules/src/config.js']
+				}
+			},
+			contacts: {
+				options: {
+					banner: '/*! contacts.min.js <%= grunt.template.today("dd-mm-yyyy") %> */\n'
+				},
+				files: {
+					'assets/mypanel/js/modules/dist/contacts.min.js': ['assets/mypanel/js/modules/src/contacts.js']
+				}
+			},
+			people: {
+				options: {
+					banner: '/*! people.min.js <%= grunt.template.today("dd-mm-yyyy") %> */\n'
+				},
+				files: {
+					'assets/mypanel/js/modules/dist/people.min.js': ['assets/mypanel/js/modules/src/people.js']
+				}
+			},
+			products: {
+				options: {
+					banner: '/*! products.min.js <%= grunt.template.today("dd-mm-yyyy") %> */\n'
+				},
+				files: {
+					'assets/mypanel/js/modules/dist/products.min.js': ['assets/mypanel/js/modules/src/products.js']
+				}
+			},
+			sliders: {
+				options: {
+					banner: '/*! sliders.min.js <%= grunt.template.today("dd-mm-yyyy") %> */\n'
+				},
+				files: {
+					'assets/mypanel/js/modules/dist/sliders.min.js': ['assets/mypanel/js/modules/src/sliders.js']
+				}
+			},
+			sales: {
+				options: {
+					banner: '/*! sales.min.js <%= grunt.template.today("dd-mm-yyyy") %> */\n'
+				},
+				files: {
+					'assets/mypanel/js/modules/dist/sales.min.js': ['assets/mypanel/js/modules/src/sales.js']
+				}
+			},
+			themes: {
+				options: {
+					banner: '/*! themes.min.js <%= grunt.template.today("dd-mm-yyyy") %> */\n'
+				},
+				files: {
+					'assets/mypanel/js/modules/dist/themes.min.js': ['assets/mypanel/js/modules/src/themes.js']
+				}
 			}
 		},
 		cssmin: {
@@ -197,8 +281,6 @@ module.exports = function(grunt) {
 						'config.min.js': 'assets/mypanel/js/modules/dist/config.min.js',
 						'contacts.min.js': 'assets/mypanel/js/modules/dist/contacts.min.js',
 						'customers.min.js': 'assets/mypanel/js/modules/dist/customers.min.js',
-						'marks.min.js': 'assets/mypanel/js/modules/dist/marks.min.js',
-						'ourcustomers.min.js': 'assets/mypanel/js/modules/dist/ourcustomers.min.js',
 						'people.min.js': 'assets/mypanel/js/modules/dist/people.min.js',
 						'products.min.js': 'assets/mypanel/js/modules/dist/products.min.js',
 						'profile.min.js': 'assets/mypanel/js/modules/dist/profile.min.js',
@@ -215,8 +297,6 @@ module.exports = function(grunt) {
 					'application/views/mypanel/includes/footer_js.php',
 					'application/views/mypanel/home.php',
 					'application/views/mypanel/adverts/banners/manage.php',
-					'application/views/mypanel/adverts/marks/manage.php',
-					'application/views/mypanel/adverts/ourcustomers/manage.php',
 					'application/views/mypanel/adverts/sliders/manage.php',
 					'application/views/mypanel/config/manage.php',
 					'application/views/mypanel/contacts/manage.php',
@@ -239,6 +319,6 @@ module.exports = function(grunt) {
 
     grunt.registerTask('default', ['wiredep', 'bower_concat', 'bowercopy', 'concat', 'uglify', 'cssmin', 'tags', 'cachebreaker']);
     grunt.registerTask('packages', ['composer:update']);
-    grunt.registerTask('debug', ['wiredep','uglify:build','tags','cachebreaker']);
+    grunt.registerTask('debug', ['tags','cachebreaker']);
 
 };
