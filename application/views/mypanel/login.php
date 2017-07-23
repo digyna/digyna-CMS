@@ -31,9 +31,9 @@
       <span class="bar"></span>
       <label><?php echo $this->lang->line('login_password')?></label>
     </div>
-    <button id="loginButton" type="submit"><?php echo $this->lang->line('login_login')?>Login</button>
+    <button id="loginButton" type="submit"><?php echo $this->lang->line('login_login')?></button>
   </form>
-  <div id="footer-box"><p class="footer-text"><span class="sign-up">digyna-cms v.1.0.0</span></p></div>
+  <div id="footer-box"><p class="footer-text"><span class="sign-up">digyna-cms V.<?php echo $this->config->item('application_version'); ?></span></p></div>
 </div>
     <?php echo form_close(); ?>
   
