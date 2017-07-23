@@ -7,7 +7,11 @@
   <link rel="shortcut icon" type="image/x-icon" href="assets/mypanel/ico/favicon.ico">
 
   <!-- start css template tags -->
+
+
   <link rel="stylesheet" type="text/css" href="assets/mypanel/css/login.css"/>
+
+
   <!-- end css template tags -->
 </head>
 

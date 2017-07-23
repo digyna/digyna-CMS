@@ -26,12 +26,17 @@
 		<link rel='stylesheet' href='../bower_components/sweetalert/dist/sweetalert.css' />
 		<!-- endbower -->
 		<!-- start css template tags -->
-		<link rel="stylesheet" type="text/css" href="../assets/mypanel/css/main.css?rel=051987ac78"/>
-		<link rel="stylesheet" type="text/css" href="../assets/mypanel/css/modal.css?rel=a3ef7476eb"/>
+
+		<link rel="stylesheet" type="text/css" href="../assets/mypanel/css/main.css?rel=8f67ca4ad7"/>
+
+		<link rel="stylesheet" type="text/css" href="../assets/mypanel/css/modal.css?rel=1eedf721ea"/>
+
 		<!-- end css template tags -->
 	<?php else : ?>
 		<!-- start mincss template tags -->
+
 		<link rel="stylesheet" type="text/css" href="../assets/mypanel/css/digyna-cms.min.css?rel=f9db9063b7"/>
+
 		<!-- end mincss template tags -->
 	<?php endif; ?>
 
