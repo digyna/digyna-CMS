@@ -2,6 +2,7 @@
 * Enhanced feature
 - Removed feature
 
-Version 1.0.0 (19.07.2017)
+Version 1.0.0 (22.07.2017)
 --------------------------
+	+ Module customers
 	+ Module users

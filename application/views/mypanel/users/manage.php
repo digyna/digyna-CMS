@@ -14,7 +14,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				<!-- END PRIMARY CONTENT HEADING -->
 				
 				<!-- start code -->
-				<?php echo form_open('mypanel/' . $controller_name . '/save/' . $person_info->person_id, array('id'=>'form-login','class'=>'wizard-user')); ?>
+				<?php
+					$person_id='';
+					if($person_info->person_id != '')
+					{
+						$person_id=$this->encryption->encrypt_url($person_info->person_id);
+					}
+				?>
+				<?php echo form_open('mypanel/' . $controller_name . '/save/' . $person_id, array('id'=>'form-login','class'=>'wizard-user','data-ved'=>$this->encryption->encrypt_url($person_info->person_id))); ?>
 					<ul>
 						<li><a href="#tab1" data-toggle="tab">1</a><span><?php echo $this->lang->line('users_login');?></span></li>
 						<li><a href="#tab2" data-toggle="tab">2</a><span><?php echo $this->lang->line('users_info');?></span></li>
@@ -34,17 +41,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 											<span class="input-group-addon input-sm">
 												<span class="glyphicon glyphicon-user"></span>
 											</span>
-											<?php
-											$data=array(
+											<?php echo form_input(array(
 												'name'=>'username',
 												'id'=>'username',
 												'class'=>'form-control input-sm',
-												'value'=>$person_info->username
-											);
-											if(!empty($person_info->username)) {
-												$data['disabled']=NULL;
-											}
-											echo form_input($data);
+												'value'=>$person_info->username));
 											?>
 										</div>
 									</div>
@@ -125,7 +126,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <?php $this->load->view('mypanel/includes/footer'); ?>
 <?php $this->load->view('mypanel/includes/footer_js'); ?>
 	<!-- start Javascript Generales-->
-	<script type="text/javascript" src="../assets/mypanel/js/modules/dist/users.min.js?rel=ed6ec47168"></script>
+	<script type="text/javascript" src="../assets/mypanel/js/modules/dist/users.min.js?rel=7f2ed9b475"></script>
 	<!-- end Javascript Generales-->
 </body>
 </html>

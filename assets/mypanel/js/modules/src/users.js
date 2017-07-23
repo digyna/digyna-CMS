@@ -31,7 +31,10 @@ $('#form-login').formValidation({
 					async: true,
 					url: base_url('users/InputValidator'),
 					type: 'POST',
-					data: csrf_form_base()
+					data: $.extend(csrf_form_base(),
+					{
+						"person_id" : $('#form-login').attr('data-ved')
+					})
 				}
 			}
 		},
@@ -74,8 +77,10 @@ $('#form-login').formValidation({
 			}
 		},
 		email:{
-			enabled: false,
 			validators: {
+				notEmpty: {
+					message: lang.line('validation_required').replace('{0}', lang.line("common_email"))
+				},
 				emailAddress: {
 					message: lang.line('validation_email_match')
 				},
@@ -87,7 +92,10 @@ $('#form-login').formValidation({
 					async: true,
 					url: base_url('users/InputValidator'),
 					type: 'POST',
-					data: csrf_form_base()
+					data: $.extend(csrf_form_base(),
+					{
+						"person_id" : $('#form-login').attr('data-ved')
+					})
 				}
 			}
 		},
@@ -190,9 +198,6 @@ $('#form-login').formValidation({
         default:
             break;
     }
-}).on('change', '[name="email"]', function() {
-	var isEmpty = $(this).val() == '';
-	$('#form-login').formValidation('enableFieldValidators', 'email', !isEmpty)
 }).bootstrapWizard({
 	'tabClass': 'nav nav-pills',
 	onTabClick: function() {
@@ -245,9 +250,9 @@ $('#form-login').formValidation({
 		$('#form-login').ajaxSubmit({
 				success: function(response) {
 					if(response.success){
-						$(location).attr('href',base_url('users'));
+						$(location).attr('href',base_url($controller_name));
 					}else{
-						$.notify(response.message, 'danger');
+						$.notify(response.message, { type: 'danger' });
 					}
 				},
 				dataType:'json'

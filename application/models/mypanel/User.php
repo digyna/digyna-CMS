@@ -14,24 +14,17 @@ class User extends Person
 	}
 
 	/*
-	Determina si existe el username
+	Checks if username exists
 	*/
-	public function exists_user($username)
+	public function check_username_exists($username, $person_id = '')
 	{
-		$this->db->from('users');
+		$this->db->from('customers');
 		$this->db->where('username', $username);
 
-		return ($this->db->get()->num_rows() == 1);
-	}
-
-	/*
-	Determina si existe el email
-	*/
-	public function exists_email($email)
-	{
-		$this->db->from('users');
-		$this->db->join('people', 'people.person_id = users.person_id');
-		$this->db->where('people.email', $email);
+		if(!empty($person_id))
+		{
+			$this->db->where('person_id !=', $person_id);
+		}
 
 		return ($this->db->get()->num_rows() == 1);
 	}
@@ -124,12 +117,8 @@ class User extends Person
 			}
 			else
 			{
-				if(!empty($user_data)){
-					$this->db->where('person_id', $user_id);
-					$success = $this->db->update('users', $user_data);
-				}else{
-					$success =TRUE;
-				}
+				$this->db->where('person_id', $user_id);
+				$success = $this->db->update('users', $user_data);
 			}
 
 			//We have either inserted or updated a new employee, now lets set permissions. 

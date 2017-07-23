@@ -15,24 +15,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				<!-- END PRIMARY CONTENT HEADING -->
 				
 				<!-- start code -->
-				<?php if($permissions->add){?>
+				<?php if($permissions->add) : ?>
 				<div id="title_bar" class="btn-toolbar">
 					<a href="<?php echo site_url('mypanel/'.$controller_name."/add"); ?>" class="btn btn-info btn-sm pull-right" role="button"><span class="glyphicon glyphicon-user">&nbsp</span><?php echo $this->lang->line($controller_name. '_new'); ?></a>
 				</div>
-				<?php } ?>
+				<?php endif; ?>
+				<?php if($permissions->read) : ?>
 				<div id="toolbar">
 					<div class="pull-left btn-toolbar">
-					<?php if($permissions->delete){?>
+					<?php if($permissions->delete) : ?>
 						<button id="delete" class="btn btn-default btn-sm">
 							<span class="fa fa-trash">&nbsp;</span><?php echo $this->lang->line("common_delete");?>
 						</button>
-					<?php } ?>
+					<?php endif; ?>
 					</div>
 				</div>
-
 				<div id="table_holder">
 					<table id="table" data-show-export="<?php echo ($permissions->export) ? 'true' : 'false'?>" data-page-size="<?php echo $this->config->item('lines_per_page'); ?>"></table>
 				</div>
+				<?php endif; ?>
 				<!-- end code -->
 			</div>
 		</div>
@@ -40,7 +41,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <?php $this->load->view('mypanel/includes/footer'); ?>
 <?php $this->load->view('mypanel/includes/footer_js'); ?>
 	<!-- start Javascript Generales-->
-	<script type="text/javascript" src="../assets/mypanel/js/modules/dist/people.min.js?rel=9421ce35b4"></script>
+	<script type="text/javascript" src="../assets/mypanel/js/modules/dist/people.min.js?rel=407cfd79e8"></script>
 	<!-- end Javascript Generales-->
 </body>
 </html>

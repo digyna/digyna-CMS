@@ -17,6 +17,9 @@ function load_stats()
         echo localStorage_setItem('csrf_cookie_name', $CI->config->item('csrf_cookie_name'));
         echo localStorage_setItem('language',$CI->lang->language);
     }
+    
+    $CI->config->set_item('encryption_key', getenv('ENCRYPTION_KEY'));
+    $CI->load->library('encryption');
 }
 
 ?>

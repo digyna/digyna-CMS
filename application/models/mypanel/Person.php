@@ -11,6 +11,28 @@ class Person extends CI_Model
 		
 		return ($this->db->get()->num_rows() == 1);
 	}
+
+	/*
+	Checks if email exists
+	*/
+	public function check_email_exists($email, $person_id = '')
+	{
+		// if the email is empty return like it is not existing
+		if(empty($email))
+		{
+			return FALSE;
+		}
+
+		$this->db->from('people');
+		$this->db->where('email', $email);
+
+		if(!empty($person_id))
+		{
+			$this->db->where('person_id !=', $person_id);
+		}
+
+		return ($this->db->get()->num_rows() == 1);
+	}
 	
 	/*
 	Gets all people
@@ -102,18 +124,17 @@ class Person extends CI_Model
 	{
 		$suggestions = array();
 	
-//		$this->db->select('person_id');
-//		$this->db->from('people');
-//		$this->db->where('deleted', 0);
-//		$this->db->where('person_id', $search);
-//		$this->db->group_start();
-//			$this->db->like('first_name', $search);
-//			$this->db->or_like('last_name', $search);
-//			$this->db->or_like('CONCAT(first_name, " ", last_name)', $search);
-//			$this->db->or_like('email', $search);
-//			$this->db->or_like('phone_number', $search);
-//			$this->db->group_end();
-//		$this->db->order_by('last_name', 'asc');
+		$this->db->select('person_id');
+		$this->db->from('people');
+		$this->db->where('person_id', $search);
+		$this->db->group_start();
+			$this->db->like('first_name', $search);
+			$this->db->or_like('last_name', $search);
+			$this->db->or_like('CONCAT(first_name, " ", last_name)', $search);
+			$this->db->or_like('email', $search);
+			$this->db->or_like('phone_number', $search);
+			$this->db->group_end();
+		$this->db->order_by('last_name', 'asc');
 
 		foreach($this->db->get()->result() as $row)
 		{

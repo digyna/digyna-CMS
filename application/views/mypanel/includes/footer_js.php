@@ -30,6 +30,6 @@
 		<!-- end js template tags -->
 	<?php else : ?>
 	<!-- start minjs template tags -->
-	<script type="text/javascript" src="../assets/mypanel/js/digyna-cms.min.js?rel=f0f562811c"></script>
+	<script type="text/javascript" src="../assets/mypanel/js/digyna-cms.min.js?rel=27d4aaab33"></script>
 	<!-- end minjs template tags -->
 <?php endif; ?>

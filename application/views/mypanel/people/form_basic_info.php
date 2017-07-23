@@ -21,37 +21,30 @@
 <div class="form-group clearfix">
 	<?php echo form_label($this->lang->line('common_gender'), 'gender', array('class'=>'control-label')); ?>
 	<div class="input-group">
-		<label class="control-label control-inline fancy-radio">
-			<?php echo form_radio(array(
+		<?php echo form_label(
+			form_radio(array(
 				'name'=>'gender',
 				'type'=>'radio',
 				'id'=>'gender',
 				'value'=>1,
-				'checked'=>(empty($person_info->gender))?TRUE:$person_info->gender === '1'));
-			?>
-			<span>
-				<i></i>
-				<?php echo $this->lang->line('common_gender_male');?>
-			</span>
-		</label>
-		<label class="control-label control-inline fancy-radio">
-			<?php echo form_radio(array(
+				'checked'=>(empty($person_info->gender))?TRUE:$person_info->gender === '1')).
+			'<span><i></i>'.$this->lang->line('common_gender_male').'</span>', '', array('class' => 'control-label control-inline fancy-radio',)); 
+		?>
+
+		<?php echo form_label(
+			form_radio(array(
 				'name'=>'gender',
 				'type'=>'radio',
 				'id'=>'gender',
 				'value'=>0,
-				'checked'=>$person_info->gender === '0'));
-			?>
-			<span>
-				<i></i>
-				<?php echo $this->lang->line('common_gender_female');?>
-			</span>
-		</label>
+				'checked'=>$person_info->gender === '0')).
+			'<span><i></i>'.$this->lang->line('common_gender_female').'</span>', '', array('class' => 'control-label control-inline fancy-radio',)); 
+		?>
 	</div>
 </div>
 
 <div class="form-group clearfix">
-	<?php echo form_label($this->lang->line('common_email'), 'email', array('class'=>'control-label')); ?>
+	<?php echo form_label($this->lang->line('common_email'), 'email', array('class'=>'required control-label')); ?>
 	<div class="input-group">
 		<span class="input-group-addon input-sm">
 			<span class="glyphicon glyphicon-envelope"></span>

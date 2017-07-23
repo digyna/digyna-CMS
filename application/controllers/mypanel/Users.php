@@ -19,6 +19,7 @@ class Users extends Persons
 
 	public function edit($user_id = -1)
 	{
+		$user_id = $this->encryption->decrypt_url($user_id);
 		if($this->User->get_logged_in_user_info()->person_id === $user_id) {
 			redirect('mypanel/profile');
 		}
@@ -31,10 +32,12 @@ class Users extends Persons
 	{
 		$isAvailable = FALSE;
 		$response= array();
+		$person_id= $this->encryption->decrypt_url($this->input->post('person_id'));
 		$username = $this->xss_clean($this->input->post('username'));
 		$email = $this->xss_clean($this->input->post('email'));
 		if(!empty($username)) {
-			$isAvailable = ($this->User->exists_user($username))?FALSE:TRUE;
+			$exists = $this->User->check_username_exists(strtolower($username), $person_id);
+			$isAvailable = !$exists ?TRUE:FALSE;
 			$response['valid']=$isAvailable;
 			if($isAvailable===FALSE){
 				$entry = array('91','94','2020','2019','2018','2017','91','2016','2015','2014','2013','2012','2011','2010');
@@ -46,13 +49,13 @@ class Users extends Persons
 				$username_entry=$username.$entry[$entry_rand];
 				($this->User->exists_user($username_entry))?NULL:$suggestion[]=$username_entry;
 				
-				$suggestions=$suggestion;
-				$response['suggestions']=$suggestions;
+				$response['suggestions']=$suggestion;
 			}
 		}
 
 		if(!empty($email)) {
-			$isAvailable = ($this->User->exists_email($email))?FALSE:TRUE;
+			$exists = $this->Person->check_email_exists(strtolower($email), $person_id);
+			$isAvailable = !$exists ?TRUE:FALSE;
 
 			if($isAvailable===TRUE) {
 				$exploded_email = explode('@', $email);
@@ -105,10 +108,6 @@ class Users extends Persons
 		echo json_encode(array('total' => $total_rows, 'rows' => $data_rows));
 	}
 
-	public function get_table_headers(){
-		parent::get_table_headers();
-	}
-
 	/*
 	Loads the employee edit form
 	*/
@@ -151,45 +150,56 @@ class Users extends Persons
 	*/
 	public function save($user_id = -1)
 	{
+
+		$first_name = $this->xss_clean($this->input->post('first_name'));
+		$last_name = $this->xss_clean($this->input->post('last_name'));
+		$email = $this->xss_clean(strtolower($this->input->post('email')));
+
+		// format first and last name properly
+		$first_name = $this->nameize($first_name);
+		$last_name = $this->nameize($last_name);
+
 		$person_data = array(
-			'first_name' => $this->input->post('first_name'),
-			'last_name' => $this->input->post('last_name'),
+			'first_name' => $first_name,
+			'last_name' => $last_name,
 			'gender' => $this->input->post('gender'),
-			'email' => $this->input->post('email'),
+			'email' => $email,
 			'phone_number' => $this->input->post('phone_number'),
 			'address_1' => $this->input->post('address_1'),
 			'address_2' => $this->input->post('address_2'),
 			'city' => $this->input->post('city'),
 			'state' => $this->input->post('state'),
 			'zip' => $this->input->post('zip'),
-			'country' => $this->input->post('country')
-		);
+			'country' => $this->input->post('country'));
 
-		$user_data = array();
-
-		if($user_id == -1) {
-			$user_data['username'] = $this->input->post('username');
-		}
-		
 		$grants_data = $this->input->post('grants') != NULL ? $this->input->post('grants') : array();
-		
+
+		//Edit customer
+		if($user_id != -1)
+		{
+			$user_id = $this->encryption->decrypt_url($user_id);
+		}
+
 		//Password has been changed OR first time password set
 		if($this->input->post('password') != '')
 		{
-			$user_data['password'] = password_hash($this->input->post('password'), PASSWORD_DEFAULT);
-			$user_data['hash_version'] = '2';
+			$user_data = array(
+				'username' => $this->input->post('username'),
+				'password' => password_hash($this->input->post('password'), PASSWORD_DEFAULT),
+				'hash_version' => 2
+			);
+		}
+		else //Password not changed
+		{
+			$user_data = array('username' => $this->input->post('username'));
 		}
 		
 		if($this->User->save_user($person_data, $user_data, $grants_data, $user_id))
 		{
-
-				echo json_encode(array('success' => TRUE));
-			
+			echo json_encode(array('success' => TRUE));
 		}
 		else//failure
 		{
-			$person_data = $this->xss_clean($person_data);
-
 			echo json_encode(array('success' => FALSE, 'message' => $this->lang->line('error_database')));
 		}
 	}

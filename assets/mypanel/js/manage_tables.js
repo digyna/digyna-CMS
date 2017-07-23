@@ -316,7 +316,7 @@
 					};
 					refresh();
 				}
-				$.notify(message,'success');
+				$.notify(message,{ type: 'success' });
 			}
 			return false;
 		};

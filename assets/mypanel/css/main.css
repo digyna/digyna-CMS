@@ -3639,6 +3639,12 @@ ul.chat-contacts.contacts-offline > li a, ul.chat-contacts.contacts-offline > li
     color: red;
 }
 /*------------------------------------------------*/
+/*  Page: Customers
+/*------------------------------------------------*/
+.form-customers fieldset {
+  padding: 15px;
+}
+/*------------------------------------------------*/
 /*	Profile Page
 /*------------------------------------------------*/
 .user-profile {

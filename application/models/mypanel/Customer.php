@@ -14,12 +14,28 @@ class Customer extends Person
 	}
 
 	/*
-	Checks if account number exists
+	Checks if username exists
 	*/
-	public function account_number_exists($account_number, $person_id = '')
+	public function check_username_exists($username, $person_id = '')
 	{
 		$this->db->from('customers');
-		$this->db->where('account_number', $account_number);
+		$this->db->where('username', $username);
+
+		if(!empty($person_id))
+		{
+			$this->db->where('person_id !=', $person_id);
+		}
+
+		return ($this->db->get()->num_rows() == 1);
+	}
+
+	/*
+	Checks if rfc exists
+	*/
+	public function check_rfc_exists($rfc, $person_id = '')
+	{
+		$this->db->from('customers');
+		$this->db->where('rfc', $rfc);
 
 		if(!empty($person_id))
 		{
@@ -89,19 +105,6 @@ class Customer extends Person
 	}
 	
 	/*
-	Gets total about a particular customer
-	*/
-	public function get_totals($customer_id)
-	{
-		$this->db->select('SUM(payment_amount) AS total');
-		$this->db->from('sales');
-		$this->db->join('sales_payments', 'sales.sale_id = sales_payments.sale_id');
-		$this->db->where('sales.customer_id', $customer_id);
-
-		return $this->db->get()->row();
-	}
-	
-	/*
 	Gets information about multiple customers
 	*/
 	public function get_multiple_info($customer_ids)
@@ -128,6 +131,7 @@ class Customer extends Person
 		{
 			if(!$customer_id || !$this->exists($customer_id))
 			{
+				$customer_data['username']='user'.$person_data['person_id'];
 				$customer_data['person_id'] = $person_data['person_id'];
 				$success = $this->db->insert('customers', $customer_data);
 			}
@@ -211,11 +215,11 @@ class Customer extends Person
 			$this->db->from('customers');
 			$this->db->join('people', 'customers.person_id = people.person_id');
 			$this->db->where('deleted', 0);
-			$this->db->like('account_number', $search);
-			$this->db->order_by('account_number', 'asc');
+			$this->db->like('rfc', $search);
+			$this->db->order_by('rfc', 'asc');
 			foreach($this->db->get()->result() as $row)
 			{
-				$suggestions[] = array('value' => $row->person_id, 'label' => $row->account_number);
+				$suggestions[] = array('value' => $row->person_id, 'label' => $row->rfc);
 			}
 		}
 		
@@ -240,7 +244,7 @@ class Customer extends Person
 			$this->db->or_like('last_name', $search);
 			$this->db->or_like('email', $search);
 			$this->db->or_like('phone_number', $search);
-			$this->db->or_like('account_number', $search);
+			$this->db->or_like('rfc', $search);
 			$this->db->or_like('CONCAT(first_name, " ", last_name)', $search);
 		$this->db->group_end();
 		$this->db->where('deleted', 0);
@@ -260,7 +264,7 @@ class Customer extends Person
 			$this->db->or_like('last_name', $search);
 			$this->db->or_like('email', $search);
 			$this->db->or_like('phone_number', $search);
-			$this->db->or_like('account_number', $search);
+			$this->db->or_like('rfc', $search);
 			$this->db->or_like('CONCAT(first_name, " ", last_name)', $search);
 		$this->db->group_end();
 		$this->db->where('deleted', 0);
