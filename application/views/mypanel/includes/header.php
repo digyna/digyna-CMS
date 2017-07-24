@@ -27,7 +27,7 @@
 		<!-- endbower -->
 		<!-- start css template tags -->
 
-		<link rel="stylesheet" type="text/css" href="../assets/mypanel/css/main.css?rel=8f67ca4ad7"/>
+		<link rel="stylesheet" type="text/css" href="../assets/mypanel/css/main.css?rel=c08e7df288"/>
 
 		<link rel="stylesheet" type="text/css" href="../assets/mypanel/css/modal.css?rel=1eedf721ea"/>
 
@@ -35,7 +35,7 @@
 	<?php else : ?>
 		<!-- start mincss template tags -->
 
-		<link rel="stylesheet" type="text/css" href="../assets/mypanel/css/digyna-cms.min.css?rel=f9db9063b7"/>
+		<link rel="stylesheet" type="text/css" href="../assets/mypanel/css/digyna-cms.min.css?rel=7aeca3be55"/>
 
 		<!-- end mincss template tags -->
 	<?php endif; ?>

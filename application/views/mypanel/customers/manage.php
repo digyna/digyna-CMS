@@ -29,6 +29,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					<div class="widget-content">
 						<?php echo form_open('mypanel/' . $controller_name . '/save/'. $person_id, array('id'=>'customer-form', 'class'=>'form-customers form-horizontal','data-ved'=>$this->encryption->encrypt_url($person_info->person_id))); ?>
 						<fieldset id="customer_basic_info">
+							<div id="required_fields_message" class="alert alert-info fade in">
+								<i class="icon ion-information-circled"></i> <?php echo $this->lang->line('common_fields_required_message'); ?>
+							</div>
+							
 							<?php $this->load->view("mypanel/people/form_basic_info"); ?>
 
 							<div class="form-group form-group-sm">

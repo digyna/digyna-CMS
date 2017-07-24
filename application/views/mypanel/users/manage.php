@@ -33,7 +33,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<div class="tab-pane" id="tab1">
 								<fieldset>
 									<legend><?php echo $this->lang->line('users_info_account');?></legend>
-									<div id="required_fields_message"><?php echo $this->lang->line('common_fields_required_message'); ?></div>
+									<div id="required_fields_message" class="alert alert-info fade in">
+										<i class="icon ion-information-circled"></i> <?php echo $this->lang->line('common_fields_required_message'); ?>
+									</div>
 									
 									<div class="form-group clearfix">
 										<?php echo form_label($this->lang->line('users_nickname'), 'username', array('class'=>'required control-label')); ?>
